@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -7,16 +7,20 @@ import {
   Image,
   Animated,
   ActivityIndicator,
-} from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
-import { closeSearchAnimation, openSearchAnimation, createSearchAnimation } from '../utils/Animation';
-import { useNavigation } from '@react-navigation/native';
-import { useFocusEffect } from '@react-navigation/native';
-import { useCallback } from 'react';
-import BillboardsLayer from '../components/BillboardsLayer';
-import { Billboards } from '../temp_data/Billboards';
-import * as Location from 'expo-location';
-import BillboardScreen from './BillboardScreen';
+} from "react-native";
+import MapView from "react-native-maps";
+import {
+  closeSearchAnimation,
+  openSearchAnimation,
+  createSearchAnimation,
+} from "../utils/Animation";
+import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback } from "react";
+import BillboardsLayer from "../components/BillboardsLayer";
+import { Billboards } from "../temp_data/Billboards";
+import * as Location from "expo-location";
+import BillboardScreen from "./BillboardScreen";
 
 export default function MapScreen() {
   const navigation = useNavigation();
@@ -25,25 +29,23 @@ export default function MapScreen() {
 
   const animationSpeed = 150;
 
-  const [animation] = useState(() =>
-    createSearchAnimation()
-  );
+  const [animation] = useState(() => createSearchAnimation());
 
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
   const [selectedBillboard, setSelectedBillboard] = useState(null);
 
   useFocusEffect(
     useCallback(() => {
-      if (isOpen){
+      if (isOpen) {
         closeSearchAnimation(animation, animationSpeed);
-        setIsOpen(false)
-      };
-    }, [])
+        setIsOpen(false);
+      }
+    }, []),
   );
 
   const toggleSearchScreen = () => {
     openSearchAnimation(animation, animationSpeed, () => {
-      navigation.navigate('Search');
+      navigation.navigate("Search");
       setIsOpen(true);
     });
   };
@@ -51,8 +53,8 @@ export default function MapScreen() {
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        console.log('Permission to access location was denied');
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
         return;
       }
 
@@ -72,52 +74,55 @@ export default function MapScreen() {
         <ActivityIndicator size="large" color="#0000ff" />
       </View>
     );
+  }
+
+  const handlePressBillboard = (bb) => {
+    if (mapRef.current) {
+      mapRef.current.animateToRegion(
+        {
+          latitude: bb.lat + 0.27, // shift down so billboard screen fits on top
+          longitude: bb.lon,
+          latitudeDelta: 0.4,
+          longitudeDelta: 0.4,
+        },
+        300, // duration in ms
+      );
+    }
+
+    setTimeout(() => {
+      setSelectedBillboard(bb);
+    }, 300);
   };
-
-    const handlePressBillboard = (bb) => {
-      if (mapRef.current) {
-        mapRef.current.animateToRegion(
-          {
-            latitude: bb.lat + 0.27, // shift down so billboard screen fits on top
-            longitude: bb.lon,
-            latitudeDelta: 0.4,
-            longitudeDelta: 0.4,
-          },
-          300 // duration in ms
-        );
-      }
-
-      setTimeout(() => {
-        setSelectedBillboard(bb);
-      }, 300);
-    };
 
   return (
     <View style={styles.container}>
       <MapView
-        initialRegion={region} showsUserLocation
+        initialRegion={region}
+        showsUserLocation
         ref={mapRef}
         style={StyleSheet.absoluteFillObject}
       >
-        <BillboardsLayer data={Billboards} onPressBillboard={(bb) => handlePressBillboard(bb)} />
+        <BillboardsLayer
+          data={Billboards}
+          onPressBillboard={(bb) => handlePressBillboard(bb)}
+        />
       </MapView>
 
-      <Image
-        source={require('../assets/appicon.png')}
-        style={styles.logo}
-      />
+      <Image source={require("../assets/appicon.png")} style={styles.logo} />
 
       <Animated.View
         style={{
-          position: 'absolute',
+          position: "absolute",
           top: animation.top,
           left: animation.left,
           width: animation.width,
           height: animation.height,
           borderRadius: animation.borderRadius,
-          backgroundColor: '#fff',
+          backgroundColor: "#fff",
           zIndex: 30,
-          shadowColor: '#000', shadowOpacity: 0.3, shadowOffset: { width: 0, height: 2 },
+          shadowColor: "#000",
+          shadowOpacity: 0.3,
+          shadowOffset: { width: 0, height: 2 },
         }}
       >
         <TouchableOpacity onPress={toggleSearchScreen}>
@@ -126,7 +131,10 @@ export default function MapScreen() {
       </Animated.View>
 
       {selectedBillboard && (
-        <BillboardScreen billboardId={selectedBillboard.id} closeFunction={() => setSelectedBillboard(null)} />
+        <BillboardScreen
+          billboardId={selectedBillboard.id}
+          closeFunction={() => setSelectedBillboard(null)}
+        />
       )}
     </View>
   );
@@ -136,14 +144,24 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   logo: {
-    position: 'absolute', bottom: 150, right: 15, width: 48, height: 48, zIndex: 30,
-    shadowColor: '#000', shadowOpacity: 0.3, shadowOffset: { width: 0, height: 2 },
+    position: "absolute",
+    bottom: 150,
+    right: 15,
+    width: 48,
+    height: 48,
+    zIndex: 30,
+    shadowColor: "#000",
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 2 },
   },
   searchPlaceholder: {
-    fontSize: 16, color: '#888', marginTop: 12, marginStart: 20
+    fontSize: 16,
+    color: "#888",
+    marginTop: 12,
+    marginStart: 20,
   },
 });

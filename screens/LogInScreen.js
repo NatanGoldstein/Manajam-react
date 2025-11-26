@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -7,29 +7,29 @@ import {
   StyleSheet,
   ImageBackground,
   Platform,
-} from 'react-native';
-import { setUserId, getUserId } from '../local_data/UserData'
+} from "react-native";
+import { setUserId } from "../local_data/UserData";
 
 export default function LogInScreen({ navigation }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   function handleLogin() {
     // 🔐 Placeholder backend auth logic
-    console.log('Logging in with:', email, password);
-    setUserId(1) // to be replaced with acctual user login id
+    console.log("Logging in with:", email, password);
+    setUserId(1); // to be replaced with acctual user login id
     // ✅ Navigate to main screen
-    navigation.replace('Main'); // replaces stack so user can't go "back" to login
+    navigation.replace("Main"); // replaces stack so user can't go "back" to login
   }
 
   return (
-      <ImageBackground
-        source={require('../assets/login_back.png')}
-        style={styles.background}
-        resizeMode="cover"
-      >
+    <ImageBackground
+      source={require("../assets/login_back.png")}
+      style={styles.background}
+      resizeMode="cover"
+    >
       <View
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}
         keyboardVerticalOffset={10} // Adjust as needed
       >
@@ -37,7 +37,7 @@ export default function LogInScreen({ navigation }) {
           placeholder="Email"
           style={styles.input}
           placeholderTextColor="rgba(16, 4, 4, 0.32)"
-          marginTop='1'
+          marginTop="1"
           value={email}
           onChangeText={setEmail}
         />
@@ -54,7 +54,7 @@ export default function LogInScreen({ navigation }) {
           <Text style={styles.buttonText}>Log In</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+        <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
           <Text style={styles.link}>Don't have an account? Sign up</Text>
         </TouchableOpacity>
       </View>
@@ -66,51 +66,37 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
   },
-  logo: {
-    alignSelf: 'center',
-    width: 120,
-    height: 120,
-    marginBottom: 15
-  },
   container: {
     flex: 1,
-    verticalAlign: 'top',
-    justifyContent: 'center',
+    verticalAlign: "top",
+    justifyContent: "center",
     marginTop: 20,
     paddingHorizontal: 30,
   },
-  title: {
-    fontSize: 32,
-    fontFamily: 'ChalkboardSE-Bold',
-    fontWeight: 'bold',
-    color: '#ffffff',
-    textAlign: 'center',
-    marginBottom: 180,
-  },
   input: {
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
     borderRadius: 12,
     padding: 15,
     marginBottom: 15,
     fontSize: 16,
   },
   button: {
-    backgroundColor: 'rgb(3, 1, 48)',
+    backgroundColor: "rgb(3, 1, 48)",
     padding: 15,
     borderRadius: 12,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 5,
   },
   buttonText: {
-    color: '#fff',
-    fontWeight: '600',
+    color: "#fff",
+    fontWeight: "600",
     fontSize: 16,
   },
   link: {
-    color: '#fff',
-    textAlign: 'center',
+    color: "#fff",
+    textAlign: "center",
     marginTop: 20,
     marginBottom: 1,
-    textDecorationLine: 'underline',
+    textDecorationLine: "underline",
   },
 });
