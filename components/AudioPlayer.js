@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import Slider  from '@react-native-community/slider'
-import { Audio } from 'expo-av';
-import { Ionicons } from '@expo/vector-icons';
+import React, { useState, useEffect } from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import Slider from "@react-native-community/slider";
+import { Audio } from "expo-av";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function AudioPlayer({ song }) {
   const [sound, setSound] = useState(null);
@@ -18,10 +18,10 @@ export default function AudioPlayer({ song }) {
         const { sound: newSound } = await Audio.Sound.createAsync(
           { uri: song.audioUrl },
           { shouldPlay: false },
-          onPlaybackStatusUpdate
+          onPlaybackStatusUpdate,
         );
         setSound(newSound);
-        console.log('sound recieved')
+        console.log("sound recieved");
       }
     };
 
@@ -42,9 +42,9 @@ export default function AudioPlayer({ song }) {
 
   const togglePlayPause = async () => {
     if (!sound) {
-        console.log('song not loaded')
-        return;
-    } 
+      console.log("song not loaded");
+      return;
+    }
     const status = await sound.getStatusAsync();
     if (status.isPlaying) {
       await sound.pauseAsync();
@@ -64,14 +64,13 @@ export default function AudioPlayer({ song }) {
     const totalSeconds = Math.floor(millis / 1000);
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
   return (
     <View style={styles.container}>
-
       <TouchableOpacity style={styles.playButton} onPress={togglePlayPause}>
-        <Ionicons name={isPlaying ? 'pause' : 'play'} size={30} color="#000" />
+        <Ionicons name={isPlaying ? "pause" : "play"} size={30} color="#000" />
       </TouchableOpacity>
 
       <View style={styles.progressContainer}>
@@ -94,18 +93,18 @@ export default function AudioPlayer({ song }) {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '100%'
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
   },
   playButton: {
-    backgroundColor: '#eee',
+    backgroundColor: "#eee",
     borderRadius: 40,
   },
   progressContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '90%',
+    flexDirection: "row",
+    alignItems: "center",
+    width: "90%",
   },
   slider: {
     flex: 1,
@@ -113,8 +112,8 @@ const styles = StyleSheet.create({
   },
   time: {
     fontSize: 12,
-    color: '#666',
+    color: "#666",
     width: 40,
-    textAlign: 'center',
+    textAlign: "center",
   },
 });
