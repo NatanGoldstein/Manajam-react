@@ -19,7 +19,7 @@ export const people = [
     id: 3, firstName: 'Stefchu', lastName: 'Pepchu', 
     primaryInstrument: 'Brass', secondaryInstrument: 'Vocals',
     genre: 'Pop', level: 'Intermidiate',
-    imageSource: 'https://github.com/NatanGoldstein/Manajam-react/blob/main/IMG_8631.jpeg?raw=true',
+    imageSource: 'https://github.com/NatanGoldstein/Manajam-react/blob/main/assets/stephanie.jpeg?raw=true',
     bands: [], events: []
     },
 ]
