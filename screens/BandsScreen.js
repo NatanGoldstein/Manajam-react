@@ -1,13 +1,6 @@
 import React, { useState } from "react";
-import {
-  View,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-  Image,
-} from 'react-native';
+import { View, ScrollView, StyleSheet, TouchableOpacity, Text, Image } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { bands } from '../temp_data/Bands'
 import BandHeader from '../components/BandHeader'
 

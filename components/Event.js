@@ -71,8 +71,11 @@ const Event = ({ event }) => {
                 <ScrollView style={styles.drawer}>
                     {event.songsList.map(songId => {
                         const song = getObjectById(songId, songs)
+                        if (!song) {
+                            return null;
+                        }
                         return (
-                            <Text style={styles.song}>{song.name}</Text>
+                            <Text key={songId} style={styles.song}>{song.name}</Text>
                         )
                     })}
                 </ScrollView>

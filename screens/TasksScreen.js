@@ -1,13 +1,6 @@
 import React, { useState } from "react";
-import {
-  View,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-  Image,
-} from 'react-native';
+import { View, ScrollView, StyleSheet, TouchableOpacity, Text, Image } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Chats } from '../temp_data/Chats'
 import ChatHeader from '../components/ChatHeader'
 
