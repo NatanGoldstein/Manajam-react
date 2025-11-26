@@ -1,0 +1,1 @@
+export const appBlue = 'rgb(137, 117, 250)'

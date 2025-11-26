@@ -1,0 +1,39 @@
+
+export const tasks = [
+    {
+        id: 1,
+        bandId: 1,
+        name: 'Book rehearsal room',
+        details: 'Contact Groove Studio for next week session',
+        owners: [1, 2],
+        assignDate: new Date('2025-11-01'),
+        done: false,
+    },
+    {
+        id: 2,
+        bandId: 1,
+        name: 'Book rehearsal room',
+        details: 'Contact Groove Studio for next week session',
+        owners: [3, 2],
+        assignDate: new Date('2025-11-01'),
+        done: false,
+    },
+    {
+        id: 3,
+        bandId: 2,
+        name: 'Book rehearsal room',
+        details: 'Contact Groove Studio for next week session',
+        owners: [1],
+        assignDate: new Date('2025-11-01'),
+        done: false,
+    },
+    {
+        id: 4,
+        bandId: 2,
+        name: 'Book rehearsal room',
+        details: 'Contact Groove Studio for next week session',
+        owners: [1],
+        assignDate: new Date('2025-11-01'),
+        done: false,
+    },
+];
