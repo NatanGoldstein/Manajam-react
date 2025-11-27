@@ -6,6 +6,7 @@ import {
   StyleSheet,
   ScrollView,
   TextInput,
+  Alert,
 } from "react-native";
 import Collapsible from "react-native-collapsible";
 import { Ionicons } from "@expo/vector-icons";
@@ -13,11 +14,21 @@ import Task from "./Task";
 import { tasks } from "../temp_data/Tasks";
 import { people } from "../temp_data/People";
 import { getObjectById } from "../utils/DataHandle";
-
+import { appBlue } from "../constants/colors";
 export default function BandTasksTab({ band }) {
   const [collapsed, setCollapsed] = useState(true);
   const [ownersCollapsed, setOwnersCollapsed] = useState(true);
   const [selectedMembers, setSelectedMembers] = useState([]);
+  const [taskName, setTaskName] = useState("");
+  const [taskDetails, setTaskDetails] = useState("");
+
+  const resetNewTaskForm = useCallback(() => {
+    setSelectedMembers([]);
+    setOwnersCollapsed(true);
+    setCollapsed(true);
+    setTaskName("");
+    setTaskDetails("");
+  }, []);
 
   const isInTaskMembers = useCallback(
     (memberId) => selectedMembers.some((id) => id === memberId),
@@ -36,63 +47,101 @@ export default function BandTasksTab({ band }) {
   );
 
   const handleNewTask = () => {
+    resetNewTaskForm();
     alert("New Task Added");
-    setSelectedMembers([]);
-    setOwnersCollapsed(true);
-    setCollapsed(true);
+  };
+
+  const confirmCancelNewTask = () => {
+    Alert.alert(
+      "Discard new task?",
+      "You have unsaved changes.",
+      [
+        { text: "Continue editing", style: "cancel" },
+        {
+          text: "Discard",
+          style: "destructive",
+          onPress: resetNewTaskForm,
+        },
+      ],
+      { cancelable: true },
+    );
   };
 
   return (
     <View>
       <TouchableOpacity
         style={styles.addButton}
-        onPress={() => (collapsed ? setCollapsed(false) : handleNewTask())}
+        onPress={() => (collapsed ? setCollapsed(false) : confirmCancelNewTask())}
       >
         <Text style={styles.addButtonText}>
-          {collapsed ? "+ New Task" : "Add Task"}
+          {collapsed ? "+ New Task" : "Cancel"}
         </Text>
       </TouchableOpacity>
       <Collapsible collapsed={collapsed}>
         <View style={styles.newTask}>
-          <TextInput style={styles.taskNameInput} placeholder="Task Name" />
+          <TextInput 
+            style={styles.taskNameInput} 
+            placeholder="Task Name" 
+            multiline
+            numberOfLines={1}
+            value={taskName} onChangeText={setTaskName} />
           <TextInput
             style={styles.taskDetailsInput}
             placeholder="Details..."
             multiline
             numberOfLines={2}
+            value={taskDetails} onChangeText={setTaskDetails}
           />
           <View style={styles.ownersSection}>
-            <View style={styles.ownersHeader}>
-              <Text style={styles.ownersText}>Owners</Text>
-              <TouchableOpacity
-                onPress={() => setOwnersCollapsed((prev) => !prev)}
-              >
-                <Ionicons name="add-circle" size={30} />
-              </TouchableOpacity>
-            </View>
-            <Collapsible collapsed={ownersCollapsed}>
-              <ScrollView style={styles.drawer}>
-                {band.membersIds.map((memberId) => {
-                  const member = getObjectById(memberId, people);
-                  if (!member) {
-                    return null;
-                  }
-                  const memberName = `${member.firstName} ${member.lastName}`;
-                  const selected = isInTaskMembers(memberId);
-                  return (
-                    <TouchableOpacity
-                      key={memberId}
-                      onPress={() => handleMemberSelection(memberId)}
-                    >
-                      <Text style={styles.memberPickerText}>
-                        {selected ? `☑   ${memberName}` : `⬚   ${memberName}`}
-                      </Text>
-                    </TouchableOpacity>
-                  );
-                })}
-              </ScrollView>
-            </Collapsible>
+            {selectedMembers.length > 0 ? (
+              <View style={styles.ownersHeader}>
+                <TouchableOpacity onPress={() => setSelectedMembers([])}>
+                  <Ionicons name="close-circle" size={30} />
+                </TouchableOpacity>
+                <Text style={styles.ownersSelectedText}>Owners ({selectedMembers.length})</Text>
+                <TouchableOpacity
+                  onPress={() => setOwnersCollapsed((prev) => !prev)}
+                >
+                  <Ionicons name="add-circle" size={30} />
+                </TouchableOpacity>
+              </View>
+            ) : (
+                <View style={styles.ownersHeader}>
+                  <Text style={styles.ownersText}>Owners</Text>
+                  <TouchableOpacity
+                    onPress={() => setOwnersCollapsed((prev) => !prev)}
+                  >
+                    <Ionicons name="add-circle" size={30} />
+                  </TouchableOpacity>
+                </View>
+            )}
           </View>
+          <Collapsible collapsed={ownersCollapsed}>
+            <ScrollView style={styles.drawer}>
+              {band.membersIds.map((memberId) => {
+                const member = getObjectById(memberId, people);
+                if (!member) {
+                  return null;
+                }
+                const memberName = `${member.firstName} ${member.lastName}`;
+                const selected = isInTaskMembers(memberId);
+                return (
+                  <TouchableOpacity
+                    key={memberId}
+                    onPress={() => handleMemberSelection(memberId)}
+                  >
+                    <Text style={styles.memberPickerText}>
+                      {selected ? `☑   ${memberName}` : `⬚   ${memberName}`}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </ScrollView>
+          </Collapsible>
+          
+          <TouchableOpacity style={styles.submitButton} onPress={handleNewTask}>
+            <Text style={styles.submitButtonText}>Submit Task</Text>
+          </TouchableOpacity>
         </View>
       </Collapsible>
       <ScrollView style={styles.sectionContent}>
@@ -101,7 +150,9 @@ export default function BandTasksTab({ band }) {
           if (!task) {
             return null;
           }
-          return <Task key={taskId} task={task} />;
+          return <Task key={taskId} task={task} 
+            setTaskName={setTaskName} setTaskDetails={setTaskDetails} 
+            setSelectedMembers={setSelectedMembers} setCollapsed={setCollapsed} />;
         })}
       </ScrollView>
     </View>
@@ -166,8 +217,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#333",
   },
+  ownersSelectedText: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: `${appBlue}`,
+  },
   drawer: {
     width: 320,
+    marginBottom: 10,
   },
   memberPickerText: {
     alignSelf: "flex-start",
@@ -176,5 +233,17 @@ const styles = StyleSheet.create({
   },
   sectionContent: {
     minHeight: 600,
+  },
+  submitButton: {
+    backgroundColor: "black",
+    borderRadius: 15,
+    paddingVertical: 12,
+    alignItems: "center",
+    width: "95%",
+    alignSelf: "center",
+  },
+  submitButtonText: {
+    color: "white",
+    fontWeight: "bold",
   },
 });

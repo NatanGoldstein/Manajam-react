@@ -8,10 +8,10 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Feather, Ionicons } from "@expo/vector-icons";
+import * as Haptics from 'expo-haptics';
 import MembersModal from "./MembersModal";
 
-const Task = ({ task }) => {
-  const [collapsed, setCollapsed] = useState(true);
+const Task = ({ task, setTaskName, setTaskDetails, setSelectedMembers, setCollapsed }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
   const date = task.assignDate.toISOString().split("T")[0];
@@ -22,9 +22,12 @@ const Task = ({ task }) => {
       <Text style={styles.nameText}>{task.name}</Text>
       <TouchableOpacity
         style={styles.editButton}
-        onPress={() =>
-          navigation.navigate("NewEvent", { event: task, state: "edit" })
-        }
+        onPress={() => {
+          setCollapsed(false)
+          setTaskName(task.name)
+          setTaskDetails(task.details)
+          setSelectedMembers(task.owners)
+        }}
       >
         <Feather name={"edit-2"} size={20} />
       </TouchableOpacity>
@@ -33,7 +36,7 @@ const Task = ({ task }) => {
           style={styles.checkButton}
           onPress={() => {
             setDone(!done);
-            Vibration.vibrate(20);
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
           }}
         >
           {done ? (
