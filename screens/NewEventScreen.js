@@ -18,6 +18,8 @@ import { songs } from "../temp_data/Songs";
 import { getObjectById } from "../utils/DataHandle";
 import { bands } from "../temp_data/Bands";
 import Collapsible from "react-native-collapsible";
+import { selectionAsync } from "expo-haptics";
+import { appBlue } from "../constants/colors";
 
 export default function NewEventScreen() {
   const route = useRoute();
@@ -171,12 +173,26 @@ export default function NewEventScreen() {
           onChangeText={setLocation}
         />
         <View style={styles.block}>
-          <View style={styles.row2}>
-            <Text style={styles.header}>Songs</Text>
-            <TouchableOpacity onPress={() => setCollapsed(!collapsed)}>
-              <Ionicons name={"add-circle"} size={30} />
-            </TouchableOpacity>
-          </View>
+            {songList.length === 0 ? (
+              <View style={styles.row2}>
+                <Text style={styles.header}>Songs</Text>
+                <TouchableOpacity onPress={() => setCollapsed(!collapsed)}>
+                  <Ionicons name={"add-circle"} size={30} />
+                </TouchableOpacity>
+              </View>
+            ):(
+              <View style={styles.row2}>
+                <TouchableOpacity onPress={() => setSongList([])}>
+                  <Ionicons name="close-circle" size={30} />
+                </TouchableOpacity>
+                <Text style={styles.selectedHeader} color={`${appBlue}`}>Songs</Text>
+                <TouchableOpacity onPress={() => setCollapsed(!collapsed)}>
+                  <Ionicons name={"add-circle"} size={30} />
+                </TouchableOpacity>
+              </View>
+            )}
+            
+         
           <Collapsible collapsed={collapsed}>
             <ScrollView style={styles.drawer}>
               {band.songIds.map((songId) => {
@@ -231,7 +247,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
     fontWeight: "bold",
-    color: "#333",
+  },
+  selectedHeader: {
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+    color: `${appBlue}`
   },
   backText: {
     fontSize: 25,

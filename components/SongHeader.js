@@ -17,7 +17,7 @@ const SongHeader = ({ song }) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
-    height: 80,
+    height: 120,
     width: "97%",
     justifyContent: "flex-start",
     padding: 15,

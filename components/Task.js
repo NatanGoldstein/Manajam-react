@@ -10,8 +10,10 @@ import { useNavigation } from "@react-navigation/native";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import * as Haptics from 'expo-haptics';
 import MembersModal from "./MembersModal";
+import ConfettiCannon from 'react-native-confetti-cannon';
+import { useRef } from "react";
 
-const Task = ({ task, setTaskName, setTaskDetails, setSelectedMembers, setCollapsed }) => {
+const Task = ({ task, setTaskName, setTaskDetails, setSelectedMembers, setCollapsed, confettiRef }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
   const date = task.assignDate.toISOString().split("T")[0];
@@ -36,6 +38,7 @@ const Task = ({ task, setTaskName, setTaskDetails, setSelectedMembers, setCollap
           style={styles.checkButton}
           onPress={() => {
             setDone(!done);
+            {done ? ('') : (confettiRef?.current?.start())}
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
           }}
         >

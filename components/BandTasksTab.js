@@ -15,13 +15,16 @@ import { tasks } from "../temp_data/Tasks";
 import { people } from "../temp_data/People";
 import { getObjectById } from "../utils/DataHandle";
 import { appBlue } from "../constants/colors";
+import { useRef } from "react";
+import ConfettiCannon from 'react-native-confetti-cannon';
+
 export default function BandTasksTab({ band }) {
   const [collapsed, setCollapsed] = useState(true);
   const [ownersCollapsed, setOwnersCollapsed] = useState(true);
   const [selectedMembers, setSelectedMembers] = useState([]);
   const [taskName, setTaskName] = useState("");
   const [taskDetails, setTaskDetails] = useState("");
-
+  const confettiRef = useRef(null);
   const resetNewTaskForm = useCallback(() => {
     setSelectedMembers([]);
     setOwnersCollapsed(true);
@@ -115,29 +118,30 @@ export default function BandTasksTab({ band }) {
                   </TouchableOpacity>
                 </View>
             )}
+              <Collapsible collapsed={ownersCollapsed}>
+              <ScrollView style={styles.drawer}>
+                {band.membersIds.map((memberId) => {
+                  const member = getObjectById(memberId, people);
+                  if (!member) {
+                    return null;
+                  }
+                  const memberName = `${member.firstName} ${member.lastName}`;
+                  const selected = isInTaskMembers(memberId);
+                  return (
+                    <TouchableOpacity
+                      key={memberId}
+                      onPress={() => handleMemberSelection(memberId)}
+                    >
+                      <Text style={styles.memberPickerText}>
+                        {selected ? `☑   ${memberName}` : `⬚   ${memberName}`}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </ScrollView>
+            </Collapsible>
           </View>
-          <Collapsible collapsed={ownersCollapsed}>
-            <ScrollView style={styles.drawer}>
-              {band.membersIds.map((memberId) => {
-                const member = getObjectById(memberId, people);
-                if (!member) {
-                  return null;
-                }
-                const memberName = `${member.firstName} ${member.lastName}`;
-                const selected = isInTaskMembers(memberId);
-                return (
-                  <TouchableOpacity
-                    key={memberId}
-                    onPress={() => handleMemberSelection(memberId)}
-                  >
-                    <Text style={styles.memberPickerText}>
-                      {selected ? `☑   ${memberName}` : `⬚   ${memberName}`}
-                    </Text>
-                  </TouchableOpacity>
-                );
-              })}
-            </ScrollView>
-          </Collapsible>
+          
           
           <TouchableOpacity style={styles.submitButton} onPress={handleNewTask}>
             <Text style={styles.submitButtonText}>Submit Task</Text>
@@ -152,9 +156,18 @@ export default function BandTasksTab({ band }) {
           }
           return <Task key={taskId} task={task} 
             setTaskName={setTaskName} setTaskDetails={setTaskDetails} 
-            setSelectedMembers={setSelectedMembers} setCollapsed={setCollapsed} />;
+            setSelectedMembers={setSelectedMembers} setCollapsed={setCollapsed} confettiRef={confettiRef} />;
         })}
       </ScrollView>
+      <ConfettiCannon ref={confettiRef}
+            count={120}
+            origin={{ x: 200, y: 0 }}   // bottom center-ish
+            autoStart={false}
+            spread={50} // even wider spread for realism
+            fadeOut={true}
+            fallSpeed={2200}       // increase fall speed for more realistic gravity
+            explosionSpeed={250}   // stronger initial velocity so confetti goes higher
+            />
     </View>
   );
 }

@@ -14,15 +14,17 @@ import { getObjectById } from "../utils/DataHandle";
 export default function BandSongsTab({ band }) {
   return (
     <View>
-      <View style={styles.sectionTopLine}>
-        <Text style={styles.sectionTitle}>Songs</Text>
-        <TouchableOpacity>
-          <Image
-            source={require("../assets/add-icon.png")}
-            style={styles.addIcon}
-          />
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity
+        style={styles.addButton}
+        onPress={() =>
+          navigation.navigate("NewEvent", {
+            event: { bandId: band.id },
+            state: "new",
+          })
+        }
+      >
+        <Text style={styles.addButtonText}>+ New Song</Text>
+      </TouchableOpacity>
       <ScrollView style={styles.sectionContent}>
         {band.songIds.map((songId) => {
           const song = getObjectById(songId, songs);
@@ -37,12 +39,20 @@ export default function BandSongsTab({ band }) {
 }
 
 const styles = StyleSheet.create({
-  sectionTopLine: {
-    flexDirection: "row",
+  addButton: {
+    alignSelf: "center",
     alignItems: "center",
-    justifyContent: "space-between",
-    paddingLeft: 20,
-    paddingRight: 20,
+    justifyContent: "center",
+    backgroundColor: "black",
+    width: 120,
+    height: 45,
+    marginBottom: 10,
+    borderRadius: 20,
+  },
+  addButtonText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 15,
   },
   sectionTitle: {
     fontSize: 20,
