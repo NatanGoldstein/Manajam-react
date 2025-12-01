@@ -10,15 +10,18 @@ import {
 import SongHeader from "./SongHeader";
 import { songs } from "../temp_data/Songs";
 import { getObjectById } from "../utils/DataHandle";
+import { useNavigation } from "@react-navigation/native";
 
 export default function BandSongsTab({ band }) {
+  const navigation = useNavigation()
+  
   return (
     <View>
       <TouchableOpacity
         style={styles.addButton}
         onPress={() =>
-          navigation.navigate("NewEvent", {
-            event: { bandId: band.id },
+          navigation.navigate("NewSong", {
+            song: { bandId: band.id },
             state: "new",
           })
         }

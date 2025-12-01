@@ -11,6 +11,7 @@ import BillboardScreen from "./screens/BillboardScreen";
 import BandssScreen from "./screens/BandsScreen";
 import BandProfileScreen from "./screens/BandProfileScreen";
 import NewEventScreen from "./screens/NewEventScreen";
+import NewSongScreen from "./screens/NewSongScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -47,6 +48,14 @@ export default function App() {
         <Stack.Screen
           name="NewEvent"
           component={NewEventScreen}
+          options={{
+            presentation: "modal",
+            animation: "slide_from_bottom",
+          }}
+        />
+        <Stack.Screen
+          name="NewSong"
+          component={NewSongScreen}
           options={{
             presentation: "modal",
             animation: "slide_from_bottom",
