@@ -136,6 +136,7 @@ export default function NewSongScreen() {
             <Ionicons name="folder-open-outline" size={22} color="#444" style={{ marginRight: 6 }} />
             <Text style={styles.floatingButtonText}>Upload File</Text>
           </TouchableOpacity>
+          <View style={styles.line}/>
           <View style={[styles.floatingButton, { flexDirection: 'row', alignItems: 'center' }]}>
             <Ionicons name="link-outline" size={22} color="#444" marginRight={5} />
             <TextInput
@@ -157,6 +158,7 @@ export default function NewSongScreen() {
             <Ionicons name="folder-open-outline" size={22} color="#444" style={{ marginRight: 6 }} />
             <Text style={styles.floatingButtonText}>Upload File</Text>
           </TouchableOpacity>
+          <View style={styles.line}/>
           <TouchableOpacity
             style={styles.floatingButton}
             onPress={() => {   
@@ -179,6 +181,7 @@ export default function NewSongScreen() {
             <Ionicons name="folder-open-outline" size={22} color="#444" style={{ marginRight: 6 }} />
             <Text style={styles.floatingButtonText}>Upload File</Text>
           </TouchableOpacity>
+          <View style={styles.line}/>
           <TouchableOpacity
             style={styles.floatingButton}
             onPress={() => {   
@@ -315,16 +318,17 @@ const styles = StyleSheet.create({
   floatingButton: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#f0f0f0",
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-    width: '100%',
-    borderRadius: 14,
+    padding: 5,
     marginVertical: 5,
+    width: '100%',
   },
   floatingButtonText: { 
     color: "#222", 
     fontWeight: "500" 
   },
-
+  line: {
+    width: '112%',
+    borderBottomWidth: 1,
+    borderColor: 'grey'
+  },
 });
