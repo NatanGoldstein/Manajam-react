@@ -1,3 +1,4 @@
+import colors from "../constants/colors";
 import React, { useState, useRef, useEffect } from "react";
 import {
   View,
@@ -71,8 +72,8 @@ export default function MapScreen() {
   if (!region) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
+          <ActivityIndicator size="large" color={colors.activityBlue} />
+        </View>
     );
   }
 
@@ -118,9 +119,9 @@ export default function MapScreen() {
           width: animation.width,
           height: animation.height,
           borderRadius: animation.borderRadius,
-          backgroundColor: "#fff",
+          backgroundColor: colors.white,
           zIndex: 30,
-          shadowColor: "#000",
+          shadowColor: colors.black,
           shadowOpacity: 0.3,
           shadowOffset: { width: 0, height: 2 },
         }}
@@ -154,13 +155,13 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     zIndex: 30,
-    shadowColor: "#000",
+  shadowColor: colors.black,
     shadowOpacity: 0.3,
     shadowOffset: { width: 0, height: 2 },
   },
   searchPlaceholder: {
     fontSize: 16,
-    color: "#888",
+  color: colors.darkGray,
     marginTop: 12,
     marginStart: 20,
   },

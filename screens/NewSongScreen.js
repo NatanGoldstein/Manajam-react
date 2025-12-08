@@ -11,7 +11,7 @@ import { useNavigation, useRoute, useFocusEffect } from "@react-navigation/nativ
 import { Ionicons } from "@expo/vector-icons";
 import { getObjectById } from "../utils/DataHandle";
 import { bands } from "../temp_data/Bands";
-import { appBlue } from "../constants/colors";
+import colors from "../constants/colors";
 
 export default function NewSongScreen() {
   const route = useRoute();
@@ -133,12 +133,12 @@ export default function NewSongScreen() {
               // TODO: add upload local file logic
             }}
           >
-            <Ionicons name="folder-open-outline" size={22} color="#444" style={{ marginRight: 6 }} />
+            <Ionicons name="folder-open-outline" size={22} color={colors.darkGray} style={{ marginRight: 6 }} />
             <Text style={styles.floatingButtonText}>Upload File</Text>
           </TouchableOpacity>
           <View style={styles.line}/>
           <View style={[styles.floatingButton, { flexDirection: 'row', alignItems: 'center' }]}>
-            <Ionicons name="link-outline" size={22} color="#444" marginRight={5} />
+            <Ionicons name="link-outline" size={22} color={colors.darkGray} marginRight={5} />
             <TextInput
               style={[styles.floatingButtonText, {width: '85%'}]}
               placeholder="Paste link"
@@ -155,7 +155,7 @@ export default function NewSongScreen() {
               // TODO: add upload local file logic
             }}
           >
-            <Ionicons name="folder-open-outline" size={22} color="#444" style={{ marginRight: 6 }} />
+            <Ionicons name="folder-open-outline" size={22} color={colors.darkGray} style={{ marginRight: 6 }} />
             <Text style={styles.floatingButtonText}>Upload File</Text>
           </TouchableOpacity>
           <View style={styles.line}/>
@@ -165,7 +165,7 @@ export default function NewSongScreen() {
               // TODO: add upload local file logic
             }}
           >
-            <Ionicons name="add-circle-outline" size={22} color="#444" marginRight={5} />
+            <Ionicons name="add-circle-outline" size={22} color={colors.darkGray} marginRight={5} />
             <Text style={styles.floatingButtonText}>Create New File</Text>
           </TouchableOpacity>
         </View>
@@ -178,7 +178,7 @@ export default function NewSongScreen() {
               // TODO: add upload local file logic
             }}
           >
-            <Ionicons name="folder-open-outline" size={22} color="#444" style={{ marginRight: 6 }} />
+            <Ionicons name="folder-open-outline" size={22} color={colors.darkGray} style={{ marginRight: 6 }} />
             <Text style={styles.floatingButtonText}>Upload File</Text>
           </TouchableOpacity>
           <View style={styles.line}/>
@@ -188,7 +188,7 @@ export default function NewSongScreen() {
               // TODO: add upload local file logic
             }}
           >
-            <Ionicons name="add-circle-outline" size={22} color="#444" marginRight={5} />
+            <Ionicons name="add-circle-outline" size={22} color={colors.darkGray} marginRight={5} />
             <Text style={styles.floatingButtonText}>Create New File</Text>
           </TouchableOpacity>
         </View>
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
     fontWeight: "bold",
-    color: "#333",
+  color: colors.darkGray,
   },
   header: {
     textAlign: "center",
@@ -229,11 +229,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
     fontWeight: "bold",
-    color: `${appBlue}`
+    color: colors.appBlue,
   },
   backText: {
     fontSize: 25,
-    color: "#000",
+  color: colors.black,
     paddingRight: 20,
   },
   backButton: {
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
     zIndex: 100,
   },
   block: {
-    backgroundColor: "rgba(255, 255, 255, 0.68)",
+  backgroundColor: colors.white68,
     borderRadius: 20,
     padding: 15,
     marginBottom: 20,
@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   input: {
-    backgroundColor: "rgb(255, 255, 255)",
+  backgroundColor: colors.white,
     borderRadius: 15,
     padding: 12,
     fontSize: 20,
@@ -284,10 +284,10 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     textAlign: "center",
     fontSize: 17,
-    backgroundColor: "rgba(215, 215, 215, 0.55)",
+  backgroundColor: colors.overlayGray55,
   },
   button: {
-    backgroundColor: "rgba(13, 3, 3, 0.9)",
+    backgroundColor: colors.black,
     width: 200,
     padding: 15,
     borderRadius: 20,
@@ -296,7 +296,7 @@ const styles = StyleSheet.create({
     margin: 30,
   },
   buttonText: {
-    color: "#fff",
+    color: colors.white,
     fontWeight: "600",
     fontSize: 18,
   },
@@ -306,7 +306,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 20,
     padding: 18,
-    shadowColor: "#000",
+    shadowColor: colors.black,
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.2,
     shadowRadius: 8,
@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   floatingButtonText: { 
-    color: "#222", 
+  color: colors.darkGray, 
     fontWeight: "500" 
   },
   line: {

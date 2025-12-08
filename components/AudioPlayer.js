@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Slider from "@react-native-community/slider";
 import { Audio } from "expo-av";
 import { Ionicons } from "@expo/vector-icons";
-import { appBlue } from "../constants/colors";
+import colors from "../constants/colors";
 
 /**
  * A functional audio player component for a given `song`.
@@ -102,7 +102,7 @@ export default function AudioPlayer({ song }) {
         style={styles.playPauseButton}
         disabled={!sound || isLoading}
       >
-        <Ionicons name={isPlaying ? "pause" : "play"} size={35} color="black" />
+  <Ionicons name={isPlaying ? "pause" : "play"} size={35} color={colors.black} />
       </TouchableOpacity>
       <View style={styles.rightSection}>
         <Slider
@@ -111,8 +111,8 @@ export default function AudioPlayer({ song }) {
           minimumValue={0}
           maximumValue={duration}
           onSlidingComplete={onSliderValueChange}
-          minimumTrackTintColor={`${appBlue}`}
-          thumbTintColor={`${appBlue}`}
+          minimumTrackTintColor={colors.appBlue}
+          thumbTintColor={colors.appBlue}
           disabled={!sound || isLoading}
         />
         <View style={styles.labelRow}>
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   playPauseButton: {
-    backgroundColor: "#EFEFEF",
+  backgroundColor: colors.lightGray,
     padding: 10,
     borderRadius: 21,
     alignItems: "center",
@@ -153,6 +153,6 @@ const styles = StyleSheet.create({
   },
   timeLabel: {
     fontSize: 14,
-    color: "#555",
+  color: colors.darkGray,
   },
 });

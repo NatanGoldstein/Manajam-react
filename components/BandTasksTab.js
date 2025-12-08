@@ -14,7 +14,7 @@ import Task from "./Task";
 import { tasks } from "../temp_data/Tasks";
 import { people } from "../temp_data/People";
 import { getObjectById } from "../utils/DataHandle";
-import { appBlue } from "../constants/colors";
+import colors from "../constants/colors";
 import { useRef } from "react";
 import ConfettiCannon from 'react-native-confetti-cannon';
 
@@ -177,14 +177,14 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "black",
+  backgroundColor: colors.black,
     width: 120,
     height: 45,
     marginBottom: 10,
     borderRadius: 20,
   },
   addButtonText: {
-    color: "white",
+  color: colors.white,
     fontWeight: "bold",
     fontSize: 15,
   },
@@ -192,11 +192,11 @@ const styles = StyleSheet.create({
     width: "95%",
     alignSelf: "center",
     borderBottomWidth: 1,
-    borderColor: "grey",
+  borderColor: colors.lightGray,
     paddingBottom: 15,
   },
   taskNameInput: {
-    backgroundColor: "rgb(255, 255, 255)",
+  backgroundColor: colors.white,
     borderRadius: 15,
     padding: 12,
     fontSize: 16,
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   taskDetailsInput: {
-    backgroundColor: "rgb(255, 255, 255)",
+  backgroundColor: colors.white,
     borderRadius: 15,
     padding: 12,
     fontSize: 16,
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     height: 80,
   },
   ownersSection: {
-    backgroundColor: "rgb(255, 255, 255)",
+  backgroundColor: colors.white,
     borderRadius: 15,
     padding: 12,
     fontSize: 16,
@@ -228,12 +228,12 @@ const styles = StyleSheet.create({
   ownersText: {
     fontSize: 15,
     fontWeight: "bold",
-    color: "#333",
+  color: colors.darkGray,
   },
   ownersSelectedText: {
     fontSize: 15,
     fontWeight: "bold",
-    color: `${appBlue}`,
+  color: colors.appBlue,
   },
   drawer: {
     width: 320,
@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
     minHeight: 600,
   },
   submitButton: {
-    backgroundColor: "black",
+  backgroundColor: colors.black,
     borderRadius: 15,
     paddingVertical: 12,
     alignItems: "center",
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   submitButtonText: {
-    color: "white",
+  color: colors.white,
     fontWeight: "bold",
   },
 });

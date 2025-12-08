@@ -9,6 +9,7 @@ import {
   Platform,
 } from "react-native";
 import { setUserId } from "../local_data/UserData";
+import colors from "../constants/colors";
 
 export default function LogInScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -36,7 +37,7 @@ export default function LogInScreen({ navigation }) {
         <TextInput
           placeholder="Email"
           style={styles.input}
-          placeholderTextColor="rgba(16, 4, 4, 0.32)"
+          placeholderTextColor={colors.placeholderDark32}
           marginTop="1"
           value={email}
           onChangeText={setEmail}
@@ -44,7 +45,7 @@ export default function LogInScreen({ navigation }) {
         <TextInput
           placeholder="Password"
           style={styles.input}
-          placeholderTextColor="rgba(16, 4, 4, 0.32)"
+          placeholderTextColor={colors.placeholderDark32}
           value={password}
           onChangeText={setPassword}
           secureTextEntry
@@ -74,26 +75,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   input: {
-    backgroundColor: "rgba(255, 255, 255, 0.9)",
+  backgroundColor: colors.white90,
     borderRadius: 12,
     padding: 15,
     marginBottom: 15,
     fontSize: 16,
   },
   button: {
-    backgroundColor: "rgb(3, 1, 48)",
+  backgroundColor: colors.navyDark,
     padding: 15,
     borderRadius: 12,
     alignItems: "center",
     marginTop: 5,
   },
   buttonText: {
-    color: "#fff",
+  color: colors.white,
     fontWeight: "600",
     fontSize: 16,
   },
   link: {
-    color: "#fff",
+  color: colors.white,
     textAlign: "center",
     marginTop: 20,
     marginBottom: 1,

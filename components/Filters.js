@@ -7,7 +7,7 @@ import {
   ScrollView,
   StyleSheet,
 } from "react-native";
-import { appBlue } from "../constants/colors";
+import colors from "../constants/colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const Filter = ({ tabs, options, onChangeFilters }) => {
@@ -65,7 +65,7 @@ const Filter = ({ tabs, options, onChangeFilters }) => {
         <MaterialCommunityIcons
           name="filter"
           size={40}
-          color={anyTabHasFilter ? appBlue : "black"}
+          color={anyTabHasFilter ? colors.appBlue : colors.black}
         />
         {anyTabHasFilter && (
           <TouchableOpacity style={styles.clearButton} onPress={clearAll}>
@@ -89,7 +89,7 @@ const Filter = ({ tabs, options, onChangeFilters }) => {
                     style={[
                       styles.tabText,
                       activeTab === tab && styles.activeTabText,
-                      tabHasFilter(i) && { color: appBlue }, // mark filtered tabs
+                      tabHasFilter(i) && { color: colors.appBlue }, // mark filtered tabs
                     ]}
                   >
                     {tab}
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: -10,
     top: -10,
-    backgroundColor: "#000",
+  backgroundColor: colors.black,
     borderRadius: 12,
     width: 24,
     height: 24,
@@ -157,16 +157,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   clearButtonText: {
-    color: "#fff",
+  color: colors.white,
     fontSize: 16,
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.3)",
+  backgroundColor: colors.blackTransparent,
     justifyContent: "flex-end",
   },
   modalContent: {
-    backgroundColor: "#fff",
+  backgroundColor: colors.white,
     padding: 25,
     maxHeight: "60%",
     minHeight: "40%",
@@ -176,10 +176,10 @@ const styles = StyleSheet.create({
   option: {
     padding: 15,
     borderBottomWidth: 1,
-    borderBottomColor: "#eee",
+  borderBottomColor: colors.lightGray,
   },
   optionText: {
-    color: "#000",
+  color: colors.black,
     fontSize: 18,
   },
   optionTextSelected: {
@@ -188,13 +188,13 @@ const styles = StyleSheet.create({
   closeButton: {
     margin: 20,
     alignSelf: "center",
-    backgroundColor: "#000",
+  backgroundColor: colors.black,
     paddingHorizontal: 30,
     paddingVertical: 12,
     borderRadius: 20,
   },
   closeButtonText: {
-    color: "#fff",
+  color: colors.white,
     fontWeight: "600",
     fontSize: 17,
   },
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
   tabBar: {
     flexDirection: "row",
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+  borderBottomColor: colors.lightGray,
   },
   tab: {
     flex: 1,
@@ -214,14 +214,14 @@ const styles = StyleSheet.create({
   },
   activeTab: {
     borderBottomWidth: 3,
-    borderBottomColor: "#000",
+  borderBottomColor: colors.black,
   },
   tabText: {
     fontSize: 16,
-    color: "#555",
+  color: colors.darkGray,
   },
   activeTabText: {
-    color: "#000",
+  color: colors.black,
     fontWeight: "bold",
   },
 });

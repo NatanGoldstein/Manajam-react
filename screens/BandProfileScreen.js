@@ -8,6 +8,7 @@ import {
 } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import MembersModal from "../components/MembersModal";
+import colors from "../constants/colors";
 import BandScheduleTab from "../components/BandScheduleTab";
 import BandSongsTab from "../components/BandSongsTab";
 import BandTasksTab from "../components/BandTasksTab";
@@ -127,7 +128,7 @@ const styles = StyleSheet.create({
   },
   specs: {
     fontSize: 14,
-    color: "#555",
+  color: colors.darkGray,
   },
   members: {
     flexDirection: "row",

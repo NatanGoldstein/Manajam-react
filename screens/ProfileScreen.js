@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { appBlue } from "../constants/colors";
+import colors from "../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
 import { bands } from "../temp_data/Bands";
 import { getObjectById } from "../utils/DataHandle";
@@ -143,18 +143,18 @@ const styles = StyleSheet.create({
   },
   specs: {
     fontSize: 14,
-    color: "#555",
+  color: colors.darkGray,
     textAlign: "center",
   },
   button: {
     marginTop: 20,
-    backgroundColor: appBlue,
+    backgroundColor: colors.appBlue,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
   },
   buttonText: {
-    color: "#fff",
+    color: colors.white,
     fontWeight: "bold",
   },
   backButton: {
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     height: 25,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    backgroundColor: "rgba(255, 255, 255, 0.5)",
+  backgroundColor: colors.white68,
     zIndex: 999,
     textAlign: "center",
   },

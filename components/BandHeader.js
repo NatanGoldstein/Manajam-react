@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
-import { appBlue } from "../constants/colors";
+import colors from "../constants/colors";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import MembersModal from "./MembersModal";
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     padding: 15,
     borderBottomWidth: 1,
-    borderBottomColor: "#eee",
+  borderBottomColor: colors.lightGray,
   },
   textArea: {
     flex: 1,
@@ -78,12 +78,12 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   unReadCount: {
-    color: "white",
+    color: colors.white,
     zIndex: 999,
     position: "absolute",
     right: 30,
     top: 50,
-    backgroundColor: appBlue,
+    backgroundColor: colors.appBlue,
     width: 25,
     height: 25,
     borderRadius: 15,

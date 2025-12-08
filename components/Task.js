@@ -10,6 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import * as Haptics from 'expo-haptics';
 import MembersModal from "./MembersModal";
+import colors from "../constants/colors";
 import ConfettiCannon from 'react-native-confetti-cannon';
 import { useRef } from "react";
 
@@ -43,7 +44,7 @@ const Task = ({ task, setTaskName, setTaskDetails, setSelectedMembers, setCollap
           }}
         >
           {done ? (
-            <Ionicons name={"checkbox"} size={35} color={"rgb(0, 102, 255)"} />
+            <Ionicons name={"checkbox"} size={35} color={colors.taskBlue} />
           ) : (
             <Ionicons name={"square-outline"} size={35} />
           )}
