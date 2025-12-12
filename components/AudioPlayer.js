@@ -102,17 +102,17 @@ export default function AudioPlayer({ song }) {
         style={styles.playPauseButton}
         disabled={!sound || isLoading}
       >
-  <Ionicons name={isPlaying ? "pause" : "play"} size={35} color={colors.black} />
+      <Ionicons name={isPlaying ? "pause" : "play"} size={35} color={colors.black} />
       </TouchableOpacity>
       <View style={styles.rightSection}>
         <Slider
-          style={{ width: '85%' }}
+          style={{ width: '80%' }}
           value={position}
           minimumValue={0}
           maximumValue={duration}
           onSlidingComplete={onSliderValueChange}
-          minimumTrackTintColor={colors.appBlue}
-          thumbTintColor={colors.appBlue}
+          minimumTrackTintColor={colors.black}
+          thumbTintColor={colors.black}
           disabled={!sound || isLoading}
         />
         <View style={styles.labelRow}>
@@ -135,11 +135,12 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   playPauseButton: {
-  backgroundColor: colors.lightGray,
+    backgroundColor: colors.appBlue,
     padding: 10,
-    borderRadius: 21,
+    borderRadius: 30,
     alignItems: "center",
     justifyContent: "center",
+    marginRight: 15,
   },
   rightSection: {
     paddingTop: 15,
@@ -147,12 +148,13 @@ const styles = StyleSheet.create({
   },
   labelRow: {
     flexDirection: "row",
-    width: '85%',
+    width: '80%',
     justifyContent: "space-between",
     marginTop: 2,
+    paddingLeft: 5,
   },
   timeLabel: {
     fontSize: 14,
-  color: colors.darkGray,
+    color: colors.darkGray,
   },
 });
