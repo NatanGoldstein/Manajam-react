@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, Feather } from "@expo/vector-icons";
 import AudioPlayer from "../components/AudioPlayer";
 import colors from "../constants/colors";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -28,48 +28,55 @@ export default function SongScreen(props) {
             <Ionicons name="chevron-back" size={40} color={colors.black} />
             </TouchableOpacity>
             <Text style={styles.headerTitle} numberOfLines={1} ellipsizeMode="tail">
-            {name}
+                {name}
             </Text>
         </View>
-        <View style={styles.audioSection}>
-            <AudioPlayer song={song} />
-        </View>
-        <ScrollView contentContainerStyle={styles.scroll}>
+        <View style={styles.scroll}>
+            <View style={styles.audioSection}>
+                <AudioPlayer song={song} />
+            </View>
             {/* Lyrics */}
-            <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Lyrics</Text>
+            <View style={{
+                flexDirection: 'row', 
+                justifyContent: 'space-between', 
+                alignItems: 'center',
+            }}>
+                <Text style={styles.sectionTitle}>Lyrics</Text>
+                <TouchableOpacity>
+                    <Feather name={"edit-2"} size={20} paddingRight={10}/>
+                </TouchableOpacity>
+            </View>
+            <ScrollView style={styles.section}>
             {lyrics ? (
                 <Text style={styles.lyricsText}>{lyrics}</Text>
             ) : (
                 <Text style={styles.placeholderText}>No lyrics available</Text>
             )}
-            </View>
+            </ScrollView>
 
-        {/* Sheets - horizontal scroll */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Sheets</Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {sheets.length === 0 ? (
-              <View style={styles.noSheets}>
-                <Text style={styles.placeholderText}>No sheets available</Text>
-              </View>
-            ) : (
-              sheets.map((sheet, idx) => (
-                <TouchableOpacity key={idx} style={styles.sheetCard}>
-                  {sheet.imageUrl ? (
-                    <Image source={{ uri: sheet.imageUrl }} style={styles.sheetImage} />
-                  ) : (
-                    <View style={styles.sheetPlaceholder} />
-                  )}
-                  <Text style={styles.sheetName} numberOfLines={1} ellipsizeMode="tail">
-                    {sheet.name || `Sheet ${idx + 1}`}
-                  </Text>
-                </TouchableOpacity>
-              ))
-            )}
-          </ScrollView>
+            {/* Sheets - horizontal scroll */}
+            <Text style={styles.sectionTitle}>Sheets</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {sheets.length === 0 ? (
+                <View style={styles.noSheets}>
+                    <Text style={styles.placeholderText}>No sheets available</Text>
+                </View>
+                ) : (
+                sheets.map((sheet, idx) => (
+                    <TouchableOpacity key={idx} style={styles.sheetCard}>
+                    {sheet.imageUrl ? (
+                        <Image source={{ uri: sheet.imageUrl }} style={styles.sheetImage} />
+                    ) : (
+                        <View style={styles.sheetPlaceholder} />
+                    )}
+                    <Text style={styles.sheetName} numberOfLines={1} ellipsizeMode="tail">
+                        {sheet.name || `Sheet ${idx + 1}`}
+                    </Text>
+                    </TouchableOpacity>
+                ))
+                )}
+            </ScrollView>
         </View>
-      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -100,25 +107,32 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   audioSection: {
-    marginBottom: 25,
+    marginBottom: 30,
     padding: 10,
     borderRadius: 15,
-    width: '95%',
+    width: '100%',
     justifyContent: 'center',
     alignSelf: 'center',
     backgroundColor: colors.overlayGray55,
   },
   section: {
-    marginBottom: 40,
+    marginBottom: 20,
+    backgroundColor: colors.overlayGray55,
+    padding: 15,
+    paddingHorizontal: 25,
+    borderRadius: 15,
+    minHeight: 100,
+    maxHeight: 320,
   },
   sectionTitle: {
     fontSize: 22,
+    paddingLeft: 10,
     fontWeight: "600",
     marginBottom: 8,
   },
   lyricsText: {
     fontSize: 15,
-    color: colors.darkGray,
+    color: colors.black,
     lineHeight: 22,
   },
   placeholderText: {

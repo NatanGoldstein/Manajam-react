@@ -6,7 +6,7 @@ export const songs = [
     audioUrl:
       'https://github.com/NatanGoldstein/Manajam-react/raw/refs/heads/Screens/BandProfileScreen/assets/songExm.mp3',
     lastUpdate: "2025-11-05",
-    lyricsFile: NaN,
+    lyrics: 'In the jungle,\nthe mighty jungle,\nthe lion sleeps tonight\n\nNear the village,\nthe peaceful village,\nthe lion sleeps tonight',
     sheets: [],
   },
   {
@@ -16,7 +16,7 @@ export const songs = [
     audioUrl:
       'https://github.com/NatanGoldstein/Manajam-react/raw/refs/heads/Screens/BandProfileScreen/assets/songExm.mp3',
     lastUpdate: "2025-11-05",
-    lyricsFile: NaN,
+    lyrics: NaN,
     sheets: [],
   },
   {
@@ -26,7 +26,7 @@ export const songs = [
     audioUrl:
       'https://github.com/NatanGoldstein/Manajam-react/raw/refs/heads/Screens/BandProfileScreen/assets/songExm.mp3',
     lastUpdate: "2025-11-05",
-    lyricsFile: NaN,
+    lyrics: NaN,
     sheets: [],
   },
   {
@@ -36,7 +36,7 @@ export const songs = [
     audioUrl:
       'https://github.com/NatanGoldstein/Manajam-react/raw/refs/heads/Screens/BandProfileScreen/assets/songExm.mp3',
     lastUpdate: "2025-11-05",
-    lyricsFile: NaN,
+    lyrics: NaN,
     sheets: [],
   },
   {
@@ -46,7 +46,7 @@ export const songs = [
     audioUrl:
       'https://github.com/NatanGoldstein/Manajam-react/raw/refs/heads/Screens/BandProfileScreen/assets/songExm.mp3',
     lastUpdate: "2025-11-05",
-    lyricsFile: NaN,
+    lyrics: NaN,
     sheets: [],
   },
 ];
