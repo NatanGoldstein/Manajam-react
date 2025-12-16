@@ -13,6 +13,7 @@ import BandProfileScreen from "./screens/BandProfileScreen";
 import NewEventScreen from "./screens/NewEventScreen";
 import NewSongScreen from "./screens/NewSongScreen";
 import SongScreen from "./screens/SongScreen";
+import LyricsFullScreen from "./screens/LyricsFullScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -63,6 +64,14 @@ export default function App() {
           }}
         />
         <Stack.Screen name="Song" component={SongScreen} />
+        <Stack.Screen
+          name="LyricsFull"
+          component={LyricsFullScreen}
+          options={{
+            presentation: "modal",
+            animation: "slide_from_bottom",
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

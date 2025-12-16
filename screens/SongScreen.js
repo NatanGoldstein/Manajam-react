@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
-import { Ionicons, Feather } from "@expo/vector-icons";
+import { Ionicons, Feather, MaterialIcons } from "@expo/vector-icons";
 import AudioPlayer from "../components/AudioPlayer";
 import colors from "../constants/colors";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -42,16 +42,22 @@ export default function SongScreen(props) {
                 alignItems: 'center',
             }}>
                 <Text style={styles.sectionTitle}>Lyrics</Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => 
+                    navigation.navigate("LyricsFull", { song: song, edit: true})}>
                     <Feather name={"edit-2"} size={20} paddingRight={10}/>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.fullScreen} onPress={() => {
+                    navigation.navigate("LyricsFull", { song: song })}
+                }>
+                    <MaterialIcons name={"fullscreen"} size={25} />
                 </TouchableOpacity>
             </View>
             <ScrollView style={styles.section}>
-            {lyrics ? (
-                <Text style={styles.lyricsText}>{lyrics}</Text>
-            ) : (
-                <Text style={styles.placeholderText}>No lyrics available</Text>
-            )}
+                {lyrics ? (
+                    <Text style={styles.lyricsText}>{lyrics}</Text>
+                ) : (
+                    <Text style={styles.placeholderText}>No lyrics available</Text>
+                )}
             </ScrollView>
 
             {/* Sheets - horizontal scroll */}
@@ -113,11 +119,11 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignSelf: 'center',
-    backgroundColor: colors.overlayGray55,
+    backgroundColor: colors.lightGray,
   },
   section: {
     marginBottom: 20,
-    backgroundColor: colors.overlayGray55,
+    backgroundColor: colors.lightGray,
     padding: 15,
     paddingHorizontal: 25,
     borderRadius: 15,
@@ -131,9 +137,10 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   lyricsText: {
-    fontSize: 15,
+    fontSize: 18,
     color: colors.black,
-    lineHeight: 22,
+    lineHeight: 40,
+    letterSpacing: 2,
   },
   placeholderText: {
     fontSize: 14,
@@ -176,5 +183,10 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 16,
     color: "#666",
+  },
+  fullScreen: {
+    position: 'absolute',
+    top: 5,
+    right: 40,
   },
 });
