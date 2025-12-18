@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect} from "react";
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, TextInput } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, TextInput, Button } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import colors from "../constants/colors";
@@ -17,6 +17,7 @@ export default function LyricsFullScreen() {
 
   const [editing, setEditing] = useState(edit);
   const [text, setText] = useState(initialLyrics);
+  const [showFloating, setShowFloating] = useState(false);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -55,17 +56,7 @@ export default function LyricsFullScreen() {
       </View>
 
       <ScrollView contentContainerStyle={styles.scroll}>
-        {editing ? (
-          <TextInput
-            style={styles.editInput}
-            multiline
-            value={text}
-            ref={inputRef}
-            onChangeText={setText}
-            textAlignVertical="top"
-          />
-        ) : (
-          song.blocks.map(block => 
+          {song.blocks.map(block => 
             block.type === 'lyricsChords' ? (
               <View key={block.id}>
                 <Text style={styles.header}>{block.header}</Text>
@@ -83,8 +74,22 @@ export default function LyricsFullScreen() {
                     bars={block.bars}
                   />
               )
-            ))
-          }
+          )}
+          {editing && (
+            <TouchableOpacity style={styles.addSectionButton} onPress={() => setShowFloating(!showFloating)}>
+              <Text style={styles.addSectionText}>+ Add new section</Text>
+            </TouchableOpacity>)}
+          {showFloating && (
+            <View style={styles.floatingWindow}>
+              <TouchableOpacity style={styles.floatingButton} onPress={() => { /* add Lyrics and Chords */ }}>
+                <Text style={styles.floatingButtonText}>Lyrics and Chords</Text>
+              </TouchableOpacity>
+              <View style={styles.line} />
+              <TouchableOpacity style={styles.floatingButton} onPress={() => { /* add Chords */ }}>
+                <Text style={styles.floatingButtonText}>Chords</Text>
+              </TouchableOpacity>
+            </View>
+          )}
       </ScrollView>
     </View>
   );
@@ -155,5 +160,59 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "700",
     marginBottom: 4,
+  },
+  addSectionButton: {
+    marginTop: 12,
+    alignSelf: 'flex-start',
+    backgroundColor: colors.lightGray,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 12,
+  },
+  addSectionText: {
+    color: colors.black,
+    fontWeight: '600',
+    fontSize: 18,
+  },
+  floatingWindow: {
+    width: '50%',
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 5,
+    marginTop: 10,
+    marginLeft: 10,
+    shadowColor: colors.black,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 8,
+    flexDirection: "column",
+    alignItems: "center",
+    zIndex: 9999,
+  },
+  floatingButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 5,
+    width: '80%',
+    justifyContent: 'center',
+  },
+  floatingButtonText: {
+    color: colors.darkGray,
+    fontWeight: "500",
+    fontSize: 16,
+  },
+  line: {
+    width: '104%',
+    borderBottomWidth: 1,
+    borderColor: 'grey',
+    marginVertical: 8,
+  },
+  floatingClose: {
+    marginTop: 8,
+  },
+  floatingCloseText: {
+    color: colors.appBlue,
+    fontWeight: '600',
   },
 });
