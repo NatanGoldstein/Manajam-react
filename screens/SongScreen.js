@@ -14,7 +14,7 @@ export default function SongScreen(props) {
 
   // local derived values
   const name = song?.name ?? "Untitled";
-  const lyrics = song?.lyrics ?? "";
+  const lyrics =  song.blocks.filter(block => block.type === 'lyricsChords').flatMap(block => block.lyrics);
   const sheets = song?.sheets ?? [];
 
   return (
@@ -54,7 +54,9 @@ export default function SongScreen(props) {
             </View>
             <ScrollView style={styles.section}>
                 {lyrics ? (
-                    <Text style={styles.lyricsText}>{lyrics}</Text>
+                  lyrics.map((line, index) => (
+                    <Text key={index} style={styles.lyricsText}>{line}</Text>
+                  ))
                 ) : (
                     <Text style={styles.placeholderText}>No lyrics available</Text>
                 )}

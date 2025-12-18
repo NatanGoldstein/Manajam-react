@@ -3,6 +3,8 @@ import { View, Text, ScrollView, TouchableOpacity, StyleSheet, TextInput } from 
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import colors from "../constants/colors";
+import ChordsLine from "../components/ChordsLine";
+import LyricsChordsLine from "../components/LyricsChordsLine";
 
 export default function LyricsFullScreen() {
   const route = useRoute();
@@ -63,8 +65,26 @@ export default function LyricsFullScreen() {
             textAlignVertical="top"
           />
         ) : (
-          <Text style={styles.lyricsText}>{text || "No lyrics available"}</Text>
-        )}
+          song.blocks.map(block => 
+            block.type === 'lyricsChords' ? (
+              <View key={block.id}>
+                <Text style={styles.header}>{block.header}</Text>
+                {block.lyrics.map((line, lineIndex) => (
+                  <LyricsChordsLine
+                    key={lineIndex}
+                    lyrics={line}
+                    chords={block.chords.filter(chord => chord.lineIndex === lineIndex)}
+                  />))}
+              </View>
+              ) : (
+                  <ChordsLine
+                    key={block.id}
+                    header={block.header}
+                    bars={block.bars}
+                  />
+              )
+            ))
+          }
       </ScrollView>
     </View>
   );
@@ -130,5 +150,10 @@ const styles = StyleSheet.create({
     color: colors.black,
     backgroundColor: colors.white90,
     borderRadius: 8,
+  },
+  header: {
+    fontSize: 18,
+    fontWeight: "700",
+    marginBottom: 4,
   },
 });

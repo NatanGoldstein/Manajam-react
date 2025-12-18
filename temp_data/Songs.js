@@ -6,7 +6,51 @@ export const songs = [
     audioUrl:
       'https://github.com/NatanGoldstein/Manajam-react/raw/refs/heads/Screens/BandProfileScreen/assets/songExm.mp3',
     lastUpdate: "2025-11-05",
-    lyrics: 'In the jungle,\nthe mighty jungle,\nthe lion sleeps tonight\n\nNear the village,\nthe peaceful village,\nthe lion sleeps tonight',
+    blocks: [
+      { id: '1', 
+        type: 'lyricsChords', 
+        header: 'Verse 1',
+        lyrics: ['In the jungle', 
+              'the mighty jungle', 
+              'the lion sleeps tonight',
+              'Near the village', 
+              'the peaceful village', 
+              'the lion sleeps tonight',
+        ],
+        chords: [
+          {id: "1", name: "Am", lineIndex: 0, charIndex: 0},
+          {id: "2", name: "Dsus4", lineIndex: 0, charIndex: 3},
+          {id: "3", name: "C", lineIndex: 1, charIndex: 0},
+          {id: "4", name: "G", lineIndex: 1, charIndex: 4},
+          {id: "5", name: "Am", lineIndex: 1, charIndex: 7},
+          {id: "6", name: "Em", lineIndex: 2, charIndex: 0},
+        ],
+      },
+      { id: '2', 
+        type: 'Chords',
+        header: 'Bridge',
+        bars: [
+          {
+            id: '1', 
+            chords: [
+              {id: "1", name: "F"}, 
+              {id: "2", name: "G"},
+              {id: "3", name: "Em"},
+              {id: "4", name: "Am"},
+            ]
+          },
+          { id: '2', 
+            chords: [
+              {id: "5", name: "F"}, 
+              {id: "6", name: "G"},
+              {id: "7", name: "C"},
+              {id: "8", name: "Am"},
+              {id: "9", name: "E7"},
+            ]
+          },
+        ],
+      },
+    ],
     sheets: [],
   },
   {
