@@ -68,8 +68,8 @@ export default function App() {
           name="LyricsFull"
           component={LyricsFullScreen}
           options={{
-            presentation: "modal",
             animation: "slide_from_bottom",
+            gestureEnabled: false,
           }}
         />
       </Stack.Navigator>

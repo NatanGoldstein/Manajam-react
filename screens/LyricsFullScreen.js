@@ -3,8 +3,9 @@ import { View, Text, ScrollView, TouchableOpacity, StyleSheet, TextInput, Button
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import colors from "../constants/colors";
-import ChordsLine from "../components/ChordsLine";
+import ChordsBar from "../components/ChordsBar";
 import LyricsChordsLine from "../components/LyricsChordsLine";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function LyricsFullScreen() {
   const route = useRoute();
@@ -19,6 +20,8 @@ export default function LyricsFullScreen() {
   const [text, setText] = useState(initialLyrics);
   const [showFloating, setShowFloating] = useState(false);
   const inputRef = useRef(null);
+  
+  const [enableScroll, setEnableScroll] = useState(true);
 
   useEffect(() => {
     if (editing) {
@@ -26,16 +29,8 @@ export default function LyricsFullScreen() {
     }
   }, [editing]);
 
-  function toggleEdit() {
-    if (editing) {
-      // Done pressed — for now just exit edit mode. Persist later.
-      // Could call a save handler here.
-    }
-    setEditing((v) => !v);
-  }
-
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.topBar}>
         <TouchableOpacity
           style={styles.backButton}
@@ -46,7 +41,7 @@ export default function LyricsFullScreen() {
           <Text style={styles.backText}>X</Text>
         </TouchableOpacity>
         <Text style={styles.headerTitle}>{name}</Text>
-        <TouchableOpacity style={styles.editButton} onPress={toggleEdit}>
+        <TouchableOpacity style={styles.editButton} onPress={() => setEditing(!editing)}>
           {editing ? (
             <Text style={styles.doneText}>Done</Text>
           ) : (
@@ -55,24 +50,33 @@ export default function LyricsFullScreen() {
         </TouchableOpacity>
       </View>
 
-      <ScrollView contentContainerStyle={styles.scroll}>
+      <ScrollView contentContainerStyle={styles.scroll} scrollEnabled={enableScroll}>
           {song.blocks.map(block => 
             block.type === 'lyricsChords' ? (
-              <View key={block.id}>
+              <View key={block.id} style={{marginBottom: 40}}>
                 <Text style={styles.header}>{block.header}</Text>
                 {block.lyrics.map((line, lineIndex) => (
                   <LyricsChordsLine
                     key={lineIndex}
                     lyrics={line}
                     chords={block.chords.filter(chord => chord.lineIndex === lineIndex)}
+                    editMode={editing}
+                    scrollToggle={setEnableScroll}
                   />))}
               </View>
               ) : (
-                  <ChordsLine
-                    key={block.id}
-                    header={block.header}
-                    bars={block.bars}
-                  />
+                <View key={block.id}>
+                  <Text style={styles.header}>{block.header}</Text>
+                  <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+                    {block.bars.map(bar => (
+                      <ChordsBar
+                        key={bar.id}
+                        chords={bar.chords}
+                        editMode={editing}
+                      />
+                    ))}
+                  </View>
+                </View>
               )
           )}
           {editing && (
@@ -82,7 +86,7 @@ export default function LyricsFullScreen() {
           {showFloating && (
             <View style={styles.floatingWindow}>
               <TouchableOpacity style={styles.floatingButton} onPress={() => { /* add Lyrics and Chords */ }}>
-                <Text style={styles.floatingButtonText}>Lyrics and Chords</Text>
+                <Text style={styles.floatingButtonText}>Lyrics & Chords</Text>
               </TouchableOpacity>
               <View style={styles.line} />
               <TouchableOpacity style={styles.floatingButton} onPress={() => { /* add Chords */ }}>
@@ -91,7 +95,7 @@ export default function LyricsFullScreen() {
             </View>
           )}
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -129,6 +133,7 @@ const styles = StyleSheet.create({
   },
   scroll: {
     padding: 20,
+    minHeight: '100%',
   },
   lyricsText: {
     fontSize: 18,

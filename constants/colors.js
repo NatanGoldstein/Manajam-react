@@ -1,4 +1,5 @@
 export const appBlue = "rgb(137, 117, 250)";
+export const appBlueFaded = "rgba(137, 117, 250, 0.6)";
 
 export const white = "#ffffff";
 export const black = "#000000";
@@ -28,6 +29,7 @@ export const pinkTransparent39 = "rgba(188, 149, 196, 0.39)";
 
 const colors = {
 	appBlue,
+	appBlueFaded,
 	white,
 	black,
 	blackTransparent,

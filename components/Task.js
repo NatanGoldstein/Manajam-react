@@ -4,15 +4,12 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  Vibration,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import * as Haptics from 'expo-haptics';
 import MembersModal from "./MembersModal";
 import colors from "../constants/colors";
-import ConfettiCannon from 'react-native-confetti-cannon';
-import { useRef } from "react";
 
 const Task = ({ task, setTaskName, setTaskDetails, setSelectedMembers, setCollapsed, confettiRef }) => {
   const [modalVisible, setModalVisible] = useState(false);

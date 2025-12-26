@@ -19,7 +19,7 @@ export const songs = [
         ],
         chords: [
           {id: "1", name: "Am", lineIndex: 0, charIndex: 0},
-          {id: "2", name: "Dsus4", lineIndex: 0, charIndex: 3},
+          {id: "2", name: "Dsus4", lineIndex: 0, charIndex: 1},
           {id: "3", name: "C", lineIndex: 1, charIndex: 0},
           {id: "4", name: "G", lineIndex: 1, charIndex: 4},
           {id: "5", name: "Am", lineIndex: 1, charIndex: 7},
@@ -35,17 +35,26 @@ export const songs = [
             chords: [
               {id: "1", name: "F"}, 
               {id: "2", name: "G"},
-              {id: "3", name: "Em"},
-              {id: "4", name: "Am"},
             ]
           },
           { id: '2', 
             chords: [
-              {id: "5", name: "F"}, 
-              {id: "6", name: "G"},
-              {id: "7", name: "C"},
-              {id: "8", name: "Am"},
-              {id: "9", name: "E7"},
+              {id: "3", name: "F"}, 
+              {id: "4", name: "G"},
+              {id: "5", name: "C"},
+            ]
+          },
+          { id: '3', 
+            chords: [
+              {id: "6", name: "F"}, 
+              {id: "7", name: "G"},
+            ]
+          },
+          { id: '4', 
+            chords: [
+              {id: "8", name: "F"}, 
+              {id: "9", name: "G"},
+              {id: "10", name: "C"},
             ]
           },
         ],
