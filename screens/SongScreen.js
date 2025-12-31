@@ -54,8 +54,8 @@ export default function SongScreen(props) {
             </View>
             <ScrollView style={styles.section}>
                 {lyrics ? (
-                  lyrics.map((line, index) => (
-                    <Text key={index} style={styles.lyricsText}>{line}</Text>
+                  lyrics.map(line => (
+                    <Text key={line.key} style={styles.lyricsText}>{line.text}</Text>
                   ))
                 ) : (
                     <Text style={styles.placeholderText}>No lyrics available</Text>

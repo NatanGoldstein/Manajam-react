@@ -10,12 +10,13 @@ export const songs = [
       { id: '1', 
         type: 'lyricsChords', 
         header: 'Verse 1',
-        lyrics: ['In the jungle', 
-              'the mighty jungle', 
-              'the lion sleeps tonight',
-              'Near the village', 
-              'the peaceful village', 
-              'the lion sleeps tonight',
+        lyrics: [
+          {key: '0', text: 'In the jungle'}, 
+          {key: '1', text: 'the mighty jungle'}, 
+          {key: '2', text: 'the lion sleeps tonight'},
+          {key: '3', text: 'Near the village'}, 
+          {key: '4', text: 'the peaceful village'}, 
+          {key: '5', text: 'the lion sleeps tonight'},
         ],
         chords: [
           {id: "1", name: "Am", lineIndex: 0, charIndex: 0},
@@ -39,22 +40,22 @@ export const songs = [
           },
           { id: '2', 
             chords: [
-              {id: "3", name: "F"}, 
-              {id: "4", name: "G"},
-              {id: "5", name: "C"},
+              {id: "1", name: "F"}, 
+              {id: "2", name: "G"},
+              {id: "3", name: "C"},
             ]
           },
           { id: '3', 
             chords: [
-              {id: "6", name: "F"}, 
-              {id: "7", name: "G"},
+              {id: "1", name: "F"}, 
+              {id: "2", name: "G"},
             ]
           },
           { id: '4', 
             chords: [
-              {id: "8", name: "F"}, 
-              {id: "9", name: "G"},
-              {id: "10", name: "C"},
+              {id: "1", name: "F"}, 
+              {id: "2", name: "G"},
+              {id: "3", name: "C"},
             ]
           },
         ],

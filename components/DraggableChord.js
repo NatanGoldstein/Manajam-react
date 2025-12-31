@@ -14,6 +14,7 @@ const DRAG_THRESHOLD = 5; // px
 
 export default function DraggableChord({
   chord,
+  draggable,
   onMove,
   onChangeName,
   onDragStart,
@@ -21,6 +22,7 @@ export default function DraggableChord({
   onDelete,
   autoFocus,
 }) {
+  chord.charIndex = chord.charIndex || 0;
   const translateX = useRef(
     new Animated.Value(chord.charIndex * CHAR_WIDTH)
   ).current;
@@ -29,6 +31,11 @@ export default function DraggableChord({
   const isDragging = useRef(false);
   const lastTap = useRef(0);
   const tapTimeout = useRef(null);
+  const [localName, setLocalName] = useState(chord.name ?? '');
+
+  // keep latest draggable in a ref so PanResponder handlers see updates
+  const draggableRef = useRef(draggable);
+  useEffect(() => { draggableRef.current = draggable; }, [draggable]);
 
   const scale = useRef(new Animated.Value(1)).current;
   const opacity = useRef(new Animated.Value(1)).current;
@@ -52,6 +59,22 @@ export default function DraggableChord({
     }
   }, [autoFocus]);
 
+  // if this chord starts empty, autofocus it once on mount / when chord id changes
+  const didAutoFocusRef = useRef(false);
+  useEffect(() => {
+    setLocalName(chord.name ?? '');
+    didAutoFocusRef.current = false;
+  }, [chord.id]);
+
+  useEffect(() => {
+    if (!didAutoFocusRef.current && (chord.name ?? '') === '') {
+      didAutoFocusRef.current = true;
+      setTimeout(() => {
+        inputRef.current?.focus?.();
+      }, 50);
+    }
+  }, [chord.id]);
+
   const panResponder = useRef(
     PanResponder.create({
       // 🔑 START + CAPTURE
@@ -61,15 +84,20 @@ export default function DraggableChord({
       onPanResponderTerminationRequest: () => false,
 
       onPanResponderGrant: () => {
-        onDragStart?.();
+        // visual feedback on press
         setChordColor(colors.appBlue);
 
         isDragging.current = false;
-        translateX.setOffset(translateX.__getValue());
-        translateX.setValue(0);
+        if (draggableRef.current) {
+          onDragStart?.();
+          translateX.setOffset(translateX.__getValue());
+          translateX.setValue(0);
+        }
       },
 
       onPanResponderMove: (_, gesture) => {
+        if (!draggableRef.current) return;
+
         if (Math.abs(gesture.dx) > DRAG_THRESHOLD) {
           isDragging.current = true;
         }
@@ -78,7 +106,7 @@ export default function DraggableChord({
       },
 
       onPanResponderRelease: () => {
-        translateX.flattenOffset();
+        if (draggableRef.current) translateX.flattenOffset();
 
         if (!isDragging.current) {
           // handle single vs double tap
@@ -117,18 +145,24 @@ export default function DraggableChord({
         }
 
         // ✅ DRAG → snap
-        const newCharIndex = Math.max(
-          0,
-          Math.round(translateX.__getValue() / CHAR_WIDTH)
-        );
+        if (draggableRef.current) {
+          const newCharIndex = Math.max(
+            0,
+            Math.round(translateX.__getValue() / CHAR_WIDTH)
+          );
 
-        onMove(chord.id, newCharIndex);
-        setChordColor(colors.appBlueFaded);
-        onDragEnd?.();
+          onMove(chord.id, newCharIndex);
+          setChordColor(colors.appBlueFaded);
+          onDragEnd?.();
+        } else {
+          // if not draggable, ensure we reset visual state
+          setChordColor(colors.appBlueFaded);
+          onDragEnd?.();
+        }
       },
 
       onPanResponderTerminate: () => {
-        translateX.flattenOffset();
+        if (draggableRef.current) translateX.flattenOffset();
         onDragEnd?.();
       },
     })
@@ -138,7 +172,7 @@ export default function DraggableChord({
     <Animated.View
       {...panResponder.panHandlers}
       style={[
-        styles.chord,
+        draggable ? styles.chord : styles.staticChord,
         { transform: [{ translateX }, { scale }], opacity, backgroundColor: chordColor },
       ]}
     >
@@ -146,9 +180,15 @@ export default function DraggableChord({
       <TextInput
         ref={inputRef}
         style={styles.input}
-        value={chord.name}
-        onChangeText={(text) => onChangeName(chord.id, text)}
-        onBlur={() => setChordColor(colors.appBlueFaded)}
+        value={localName}
+        onChangeText={(text) => { setLocalName(text); onChangeName(chord.id, text); }}
+        onBlur={() => {
+          setChordColor(colors.appBlueFaded);
+          if ((localName ?? '').trim() === '') {
+            // delete if still empty on blur
+            onDelete?.(chord.id);
+          }
+        }}
         pointerEvents="none"
         underlineColorAndroid="transparent"
       />
@@ -168,6 +208,16 @@ const styles = StyleSheet.create({
         color: "white",
         minWidth: 25,
         textAlign: "center",
+    },
+    staticChord: {
+        fontSize: 12,
+        fontWeight: "600",
+        padding: 4,
+        borderRadius: 4,
+        color: "white",
+        minWidth: 25,
+        textAlign: "center",
+        marginRight: 4,
     },
         input: {
         fontSize: 12,

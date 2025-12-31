@@ -8,6 +8,7 @@ export const white68 = "rgba(255, 255, 255, 0.68)";
 export const white90 = "rgba(255, 255, 255, 0.9)";
 
 export const lightGray = "#eee";
+export const mediumGray = "#8b8b8bff";
 export const darkGray = "#333333";
 
 export const overlayGray55 = "rgba(215, 215, 215, 0.55)";
@@ -36,6 +37,7 @@ const colors = {
 	white68,
 	white90,
 	lightGray,
+	mediumGray,
 	darkGray,
 	overlayGray55,
 	placeholderDark32,

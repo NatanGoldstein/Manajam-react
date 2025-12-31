@@ -7,10 +7,25 @@ import DraggableChord from './DraggableChord';
 const CHAR_WIDTH = 35;
 const LINE_HEIGHT = 60;
 
-export default function LyricsChordsLine({ lyrics, chords, editMode, scrollToggle }) {
+export default function LyricsChordsLine({ 
+  lineIndex, lyrics, chords, 
+  editMode, scrollToggle, updateLyricsLine, 
+  updateLineChords, deleteLyricsLine, createLyricsLine,
+  lyricsFocusTarget, onLyricsFocusHandled
+}) {
   const [lyricsTemp, setLyricsTemp] = useState(lyrics);
   const [chordsTemp, setChordsTemp] = useState(chords);
   const [focusedChordId, setFocusedChordId] = useState(null);
+  const inputRef = React.useRef(null);
+
+  React.useEffect(() => {
+    if (lyricsFocusTarget && lyricsFocusTarget.blockId && lyricsFocusTarget.lineIndex === lineIndex) {
+      setTimeout(() => {
+        inputRef.current?.focus?.();
+        onLyricsFocusHandled?.();
+      }, 80);
+    }
+  }, [lyricsFocusTarget]);
 
   const moveChord = (chordId, newCharIndex) => {
     setChordsTemp(prev =>
@@ -53,6 +68,22 @@ export default function LyricsChordsLine({ lyrics, chords, editMode, scrollToggl
   setFocusedChordId(newChord.id);
   };
 
+  // commit local changes when editMode transitions from true -> false
+  const prevEditRef = React.useRef(editMode);
+  React.useEffect(() => {
+    if (prevEditRef.current && !editMode) {
+      // commit lyrics
+      if (typeof updateLyricsLine === 'function') {
+        updateLyricsLine(lineIndex, lyricsTemp);
+      }
+      // commit chords
+      if (typeof updateLineChords === 'function') {
+        updateLineChords(chordsTemp);
+      }
+    }
+    prevEditRef.current = editMode;
+  }, [editMode]);
+
   return (
     <View>
       {editMode ? (
@@ -62,6 +93,7 @@ export default function LyricsChordsLine({ lyrics, chords, editMode, scrollToggl
               <DraggableChord
                 key={chord.id}
                 chord={chord}
+                draggable={true}
                 onMove={moveChord}
                 onChangeName={renameChord}
                 onDragStart={() => scrollToggle(false)}
@@ -86,9 +118,24 @@ export default function LyricsChordsLine({ lyrics, chords, editMode, scrollToggl
             })()}
           </View>
           <TextInput
+            ref={inputRef}
             style={styles.lyrics}
             value={lyricsTemp}
             onChangeText={text => setLyricsTemp(text)}
+            onSubmitEditing={() => {
+              // create a new line right after this one
+              if (typeof createLyricsLine === 'function') {
+                createLyricsLine('', lineIndex);
+              }
+            }}
+            onKeyPress={({ nativeEvent }) => {
+              if (nativeEvent.key === 'Backspace' && (lyricsTemp ?? '') === '') {
+                // delete this line
+                if (typeof deleteLyricsLine === 'function') {
+                  deleteLyricsLine(lineIndex);
+                }
+              }
+            }}
           />
         </View>
       ):(
