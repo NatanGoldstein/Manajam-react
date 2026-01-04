@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { instruments, genres, levels } from "../constants/lists";
+import colors from "../constants/colors";
 
 export default function SignUpScreen({ navigation }) {
   // First block
@@ -208,7 +209,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: 120,
-    backgroundColor: "rgba(255, 255, 255, 0.6)",
+  backgroundColor: colors.white68,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
@@ -224,11 +225,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
     fontWeight: "bold",
-    color: "#333",
+  color: colors.darkGray,
   },
   backText: {
     fontSize: 16,
-    color: "#000",
+  color: colors.black,
     paddingRight: 20,
   },
   backButton: {
@@ -236,7 +237,7 @@ const styles = StyleSheet.create({
     zIndex: 100,
   },
   block: {
-    backgroundColor: "rgba(255, 255, 255, 0.68)",
+  backgroundColor: colors.white68,
     borderRadius: 20,
     padding: 15,
     marginBottom: 20,
@@ -248,7 +249,7 @@ const styles = StyleSheet.create({
     height: 90,
   },
   input: {
-    backgroundColor: "rgb(255, 255, 255)",
+  backgroundColor: colors.white,
     borderRadius: 15,
     padding: 12,
     fontSize: 16,
@@ -260,7 +261,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   picker: {
-    backgroundColor: "#fff",
+  backgroundColor: colors.white,
     borderRadius: 20,
     marginBottom: 10,
     height: "120",
@@ -268,14 +269,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   button: {
-    backgroundColor: "rgba(13, 3, 3, 0.9)",
+  backgroundColor: colors.blackTransparent,
     padding: 15,
     borderRadius: 20,
     alignItems: "center",
     marginBottom: 30,
   },
   buttonText: {
-    color: "#fff",
+  color: colors.white,
     fontWeight: "600",
     fontSize: 18,
   },

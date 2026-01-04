@@ -11,6 +11,9 @@ import BillboardScreen from "./screens/BillboardScreen";
 import BandssScreen from "./screens/BandsScreen";
 import BandProfileScreen from "./screens/BandProfileScreen";
 import NewEventScreen from "./screens/NewEventScreen";
+import NewSongScreen from "./screens/NewSongScreen";
+import SongScreen from "./screens/SongScreen";
+import LyricsFullScreen from "./screens/LyricsFullScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -50,6 +53,23 @@ export default function App() {
           options={{
             presentation: "modal",
             animation: "slide_from_bottom",
+          }}
+        />
+        <Stack.Screen
+          name="NewSong"
+          component={NewSongScreen}
+          options={{
+            presentation: "modal",
+            animation: "slide_from_bottom",
+          }}
+        />
+        <Stack.Screen name="Song" component={SongScreen} />
+        <Stack.Screen
+          name="LyricsFull"
+          component={LyricsFullScreen}
+          options={{
+            animation: "slide_from_bottom",
+            gestureEnabled: false,
           }}
         />
       </Stack.Navigator>

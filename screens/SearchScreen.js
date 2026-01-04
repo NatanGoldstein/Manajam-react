@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { instruments, genres, levels, facilities } from "../constants/lists";
 import Filter from "../components/Filters";
+import colors from "../constants/colors";
 import { searchResaults } from "../temp_data/SearchResaults";
 import PersonSearchResault from "../components/PersonSearchResault";
 import { people } from "../temp_data/People";
@@ -29,7 +30,7 @@ export default function SearchScreen() {
     <Animated.View
       style={{
         zIndex: 30,
-        backgroundColor: "#fff",
+        backgroundColor: colors.white,
         top: 0,
         left: 0,
         width: width,
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
     left: 50,
     right: 20,
     height: 45,
-    backgroundColor: "#eee",
+  backgroundColor: colors.lightGray,
     borderRadius: 20,
     paddingHorizontal: 15,
     flexDirection: "row",
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
     zIndex: 30,
   },
   backButton: {
-    color: "black",
+  color: colors.black,
     paddingTop: 8,
     paddingLeft: 10,
   },
@@ -147,11 +148,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 55,
     marginHorizontal: 5,
     borderRadius: 20,
-    backgroundColor: "#eee",
+    backgroundColor: colors.lightGray,
   },
-  activeToggle: { backgroundColor: "#000" },
+  activeToggle: { backgroundColor: colors.black },
 
-  toggleText: { color: "#fff", fontWeight: "600" },
+  toggleText: { color: colors.white, fontWeight: "600" },
 
   filters: {
     position: "absolute",

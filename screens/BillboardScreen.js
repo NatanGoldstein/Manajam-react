@@ -10,6 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Billboards } from "../temp_data/Billboards";
 import { posts } from "../temp_data/posts";
 import Post from "../components/Post";
+import colors from "../constants/colors";
 
 export default function BillboardScreen({ billboardId, closeFunction }) {
   const billboard = Billboards.find((b) => b.id === billboardId);
@@ -57,10 +58,10 @@ const styles = StyleSheet.create({
     flex: 0.8,
     width: "95%",
     alignSelf: "center",
-    backgroundColor: "rgb(255, 255, 255)",
+  backgroundColor: colors.white,
     borderRadius: 20,
-    padding: 15,
-    shadowColor: "#000",
+  padding: 15,
+  shadowColor: colors.black,
     shadowOpacity: 0.3,
     shadowOffset: { width: 0, height: 2 },
   },

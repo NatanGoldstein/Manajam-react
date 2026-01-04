@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { getUserId } from "../local_data/UserData";
+import colors from "../constants/colors";
 
 const PersonSearchResault = ({ person }) => {
   const navigation = useNavigation();
@@ -39,14 +40,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 15,
     borderBottomWidth: 1,
-    borderBottomColor: "#eee",
+  borderBottomColor: colors.lightGray,
   },
   nameText: {
     fontWeight: "bold",
   },
   bioText: {
     fontSize: 12,
-    color: "#555",
+  color: colors.darkGray,
   },
   image: {
     height: "100%",

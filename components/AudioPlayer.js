@@ -3,48 +3,85 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Slider from "@react-native-community/slider";
 import { Audio } from "expo-av";
 import { Ionicons } from "@expo/vector-icons";
+import colors from "../constants/colors";
+
+/**
+ * A functional audio player component for a given `song`.
+ * 
+ * Accepts: 
+ *    song: {
+ *      audioUrl: string   // a valid URL to an audio file
+ *      ... (other song properties)
+ *    }
+ * 
+ * This implementation should enable play/pause with UI feedback, 
+ * audio seeking via slider, and resets on new song.
+ */
+function millisToMMSS(millis) {
+  const totalSec = Math.max(0, Math.floor(millis / 1000));
+  const m = Math.floor(totalSec / 60);
+  const s = totalSec % 60;
+  return `${m}:${s < 10 ? "0" : ""}${s}`;
+}
 
 export default function AudioPlayer({ song }) {
   const [sound, setSound] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    let soundObject;
+    let isMounted = true;
+    let thisSound = null;
 
-    const loadSound = async () => {
+    async function load() {
+      setIsLoading(true);
+      if (sound) {
+        await sound.unloadAsync();
+        setSound(null);
+      }
       if (song?.audioUrl) {
-        const { sound: newSound } = await Audio.Sound.createAsync(
-          { uri: song.audioUrl },
-          { shouldPlay: false },
-          onPlaybackStatusUpdate,
-        );
-        setSound(newSound);
-        console.log("sound recieved");
+        try {
+          const { sound: newSound, status } = await Audio.Sound.createAsync(
+            { uri: song.audioUrl },
+            { shouldPlay: false },
+            (status) => {
+              if (!isMounted) return;
+              if (status.isLoaded) {
+                setPosition(status.positionMillis);
+                setDuration(status.durationMillis || 1);
+                setIsPlaying(status.isPlaying);
+              }
+            }
+          );
+          thisSound = newSound;
+          setSound(newSound);
+          setPosition(0);
+          setDuration(status.durationMillis || 1);
+        } catch (e) {
+          // Could not load audio
+          setSound(null);
+        }
       }
-    };
+      setIsLoading(false);
+    }
 
-    const onPlaybackStatusUpdate = (status) => {
-      if (status.isLoaded) {
-        setPosition(status.positionMillis);
-        setDuration(status.durationMillis || 1);
-        setIsPlaying(status.isPlaying);
-      }
-    };
-
-    loadSound();
+    load();
 
     return () => {
-      if (soundObject) soundObject.unloadAsync();
+      isMounted = false;
+      if (thisSound) {
+        thisSound.unloadAsync();
+      }
     };
-  }, [song]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [song?.audioUrl]);
 
   const togglePlayPause = async () => {
-    if (!sound) {
-      console.log("song not loaded");
+    if (!sound){
       return;
-    }
+    } 
     const status = await sound.getStatusAsync();
     if (status.isPlaying) {
       await sound.pauseAsync();
@@ -54,38 +91,34 @@ export default function AudioPlayer({ song }) {
   };
 
   const onSliderValueChange = async (value) => {
-    if (sound) {
-      const seekPosition = value * duration;
-      await sound.setPositionAsync(seekPosition);
-    }
-  };
-
-  const formatTime = (millis) => {
-    const totalSeconds = Math.floor(millis / 1000);
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+    if (!sound) return;
+    await sound.setPositionAsync(value);
   };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.playButton} onPress={togglePlayPause}>
-        <Ionicons name={isPlaying ? "pause" : "play"} size={30} color="#000" />
+      <TouchableOpacity
+        onPress={togglePlayPause}
+        style={styles.playPauseButton}
+        disabled={!sound || isLoading}
+      >
+      <Ionicons name={isPlaying ? "pause" : "play"} size={35} color={colors.black} />
       </TouchableOpacity>
-
-      <View style={styles.progressContainer}>
-        <Text style={styles.time}>{formatTime(position)}</Text>
+      <View style={styles.rightSection}>
         <Slider
-          style={styles.slider}
+          style={{ width: '80%' }}
+          value={position}
           minimumValue={0}
-          maximumValue={1}
-          value={position / duration}
-          onValueChange={onSliderValueChange}
-          minimumTrackTintColor="#1db954"
-          maximumTrackTintColor="#ccc"
-          thumbTintColor="#1db954"
+          maximumValue={duration}
+          onSlidingComplete={onSliderValueChange}
+          minimumTrackTintColor={colors.black}
+          thumbTintColor={colors.black}
+          disabled={!sound || isLoading}
         />
-        <Text style={styles.time}>{formatTime(duration)}</Text>
+        <View style={styles.labelRow}>
+          <Text style={styles.timeLabel}>{millisToMMSS(position)}</Text>
+          <Text style={styles.timeLabel}>{millisToMMSS(duration)}</Text>
+        </View>
       </View>
     </View>
   );
@@ -93,27 +126,35 @@ export default function AudioPlayer({ song }) {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
     alignItems: "center",
-    width: "100%",
+    flexDirection: 'row',
   },
-  playButton: {
-    backgroundColor: "#eee",
-    borderRadius: 40,
+  title: {
+    fontSize: 18,
+    fontWeight: "600",
+    marginBottom: 8,
   },
-  progressContainer: {
-    flexDirection: "row",
+  playPauseButton: {
+    backgroundColor: colors.appBlue,
+    padding: 10,
+    borderRadius: 30,
     alignItems: "center",
-    width: "90%",
+    justifyContent: "center",
+    marginRight: 15,
   },
-  slider: {
-    flex: 1,
-    marginHorizontal: 8,
+  rightSection: {
+    paddingTop: 15,
+    width: '100%'
   },
-  time: {
-    fontSize: 12,
-    color: "#666",
-    width: 40,
-    textAlign: "center",
+  labelRow: {
+    flexDirection: "row",
+    width: '80%',
+    justifyContent: "space-between",
+    marginTop: 2,
+    paddingLeft: 5,
+  },
+  timeLabel: {
+    fontSize: 14,
+    color: colors.darkGray,
   },
 });

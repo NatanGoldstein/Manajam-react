@@ -18,6 +18,8 @@ import { songs } from "../temp_data/Songs";
 import { getObjectById } from "../utils/DataHandle";
 import { bands } from "../temp_data/Bands";
 import Collapsible from "react-native-collapsible";
+import { selectionAsync } from "expo-haptics";
+import colors from "../constants/colors";
 
 export default function NewEventScreen() {
   const route = useRoute();
@@ -171,12 +173,26 @@ export default function NewEventScreen() {
           onChangeText={setLocation}
         />
         <View style={styles.block}>
-          <View style={styles.row2}>
-            <Text style={styles.header}>Songs</Text>
-            <TouchableOpacity onPress={() => setCollapsed(!collapsed)}>
-              <Ionicons name={"add-circle"} size={30} />
-            </TouchableOpacity>
-          </View>
+            {songList.length === 0 ? (
+              <View style={styles.row2}>
+                <Text style={styles.header}>Songs</Text>
+                <TouchableOpacity onPress={() => setCollapsed(!collapsed)}>
+                  <Ionicons name={"add-circle"} size={30} />
+                </TouchableOpacity>
+              </View>
+            ):(
+              <View style={styles.row2}>
+                <TouchableOpacity onPress={() => setSongList([])}>
+                  <Ionicons name="close-circle" size={30} />
+                </TouchableOpacity>
+                <Text style={styles.selectedHeader} color={`${colors.appBlue}`}>Songs</Text>
+                <TouchableOpacity onPress={() => setCollapsed(!collapsed)}>
+                  <Ionicons name={"add-circle"} size={30} />
+                </TouchableOpacity>
+              </View>
+            )}
+            
+         
           <Collapsible collapsed={collapsed}>
             <ScrollView style={styles.drawer}>
               {band.songIds.map((songId) => {
@@ -225,17 +241,22 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
     fontWeight: "bold",
-    color: "#333",
+  color: colors.darkGray,
   },
   header: {
     textAlign: "center",
     fontSize: 20,
     fontWeight: "bold",
-    color: "#333",
+  },
+  selectedHeader: {
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+    color: colors.appBlue,
   },
   backText: {
     fontSize: 25,
-    color: "#000",
+  color: colors.black,
     paddingRight: 20,
   },
   backButton: {
@@ -243,7 +264,7 @@ const styles = StyleSheet.create({
     zIndex: 100,
   },
   block: {
-    backgroundColor: "rgba(255, 255, 255, 0.68)",
+  backgroundColor: colors.white68,
     borderRadius: 20,
     padding: 15,
     marginBottom: 20,
@@ -274,7 +295,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   input: {
-    backgroundColor: "rgb(255, 255, 255)",
+  backgroundColor: colors.white,
     borderRadius: 15,
     padding: 12,
     fontSize: 16,
@@ -286,10 +307,10 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     textAlign: "center",
     fontSize: 17,
-    backgroundColor: "rgba(215, 215, 215, 0.55)",
+  backgroundColor: colors.overlayGray55,
   },
   button: {
-    backgroundColor: "rgba(13, 3, 3, 0.9)",
+    backgroundColor: colors.black,
     width: 200,
     padding: 15,
     borderRadius: 20,
@@ -298,7 +319,7 @@ const styles = StyleSheet.create({
     margin: 30,
   },
   buttonText: {
-    color: "#fff",
+    color: colors.white,
     fontWeight: "600",
     fontSize: 18,
   },

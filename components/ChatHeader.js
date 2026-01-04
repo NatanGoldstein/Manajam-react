@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
-import { appBlue } from "../constants/colors";
+import colors from "../constants/colors";
 import { getObjectById } from "../utils/DataHandle";
 import { people } from "../temp_data/People";
 
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     padding: 15,
     borderBottomWidth: 1,
-    borderBottomColor: "#eee",
+  borderBottomColor: colors.lightGray,
   },
   textArea: {
     flex: 1,
@@ -61,12 +61,12 @@ const styles = StyleSheet.create({
     borderRadius: 40,
   },
   unReadCount: {
-    color: "white",
+    color: colors.white,
     zIndex: 999,
     position: "absolute",
     right: 30,
     top: 50,
-    backgroundColor: appBlue,
+    backgroundColor: colors.appBlue,
     width: 25,
     height: 25,
     borderRadius: 15,

@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import colors from "../constants/colors";
 
 const Post = ({ data }) => {
   return (
@@ -13,12 +14,12 @@ const Post = ({ data }) => {
 const styles = StyleSheet.create({
   post: {
     flex: 1,
-    backgroundColor: "#fff",
+  backgroundColor: colors.white,
     margin: 5,
     padding: 10,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: "#ddd",
+  borderColor: colors.lightGray,
     elevation: 2,
     minHeight: 450,
   },

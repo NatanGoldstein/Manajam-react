@@ -13,6 +13,7 @@ import { getObjectById } from "../utils/DataHandle";
 import Collapsible from "react-native-collapsible";
 import { songs } from "../temp_data/Songs";
 import MembersModal from "./MembersModal";
+import colors from "../constants/colors";
 
 const Event = ({ event }) => {
   const [collapsed, setCollapsed] = useState(true);
@@ -66,9 +67,7 @@ const Event = ({ event }) => {
               styles.attendingButtonV,
               {
                 backgroundColor:
-                  attending === 1
-                    ? "rgb(62, 251, 56)"
-                    : "rgba(151, 196, 149, 0.39)",
+                  attending === 1 ? colors.green : colors.greenTransparent39,
               },
             ]}
             onPress={() => setAttending(1)}
@@ -80,9 +79,7 @@ const Event = ({ event }) => {
               styles.attendingButtonX,
               {
                 backgroundColor:
-                  attending === 2
-                    ? "rgb(255, 132, 132)"
-                    : "rgba(196, 149, 149, 0.39)",
+                  attending === 2 ? colors.red : colors.redTransparent39,
               },
             ]}
             onPress={() => setAttending(2)}
@@ -94,9 +91,7 @@ const Event = ({ event }) => {
               styles.attendingButtonM,
               {
                 backgroundColor:
-                  attending === 3
-                    ? "rgb(255, 119, 250)"
-                    : "rgba(188, 149, 196, 0.39)",
+                  attending === 3 ? colors.pink : colors.pinkTransparent39,
               },
             ]}
             onPress={() => setAttending(3)}
@@ -148,7 +143,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 15,
     marginLeft: "1.75%",
-    borderBottomColor: "grey",
+  borderBottomColor: colors.lightGray,
     borderBottomWidth: 1,
   },
   details: {
@@ -174,7 +169,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     paddingVertical: 10,
     borderRadius: 10,
-    backgroundColor: "rgba(1, 1, 1, 0.08)",
+  backgroundColor: colors.blackTransparent,
   },
   song: {
     paddingLeft: 10,
@@ -185,7 +180,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     height: 35,
     width: 80,
-    borderColor: "grey",
+  borderColor: colors.lightGray,
     borderRadius: 15,
     borderWidth: 1,
   },
@@ -194,7 +189,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRightWidth: 1,
-    borderColor: "grey",
+  borderColor: colors.lightGray,
     borderTopLeftRadius: 15,
     borderBottomLeftRadius: 15,
   },
@@ -203,7 +198,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRightWidth: 1,
-    borderColor: "grey",
+  borderColor: colors.lightGray,
   },
   attendingButtonM: {
     width: "33.33%",
@@ -222,7 +217,7 @@ const styles = StyleSheet.create({
   calander: {
     width: 60,
     height: 60,
-    shadowColor: "black",
+  shadowColor: colors.black,
     shadowOffset: 10,
   },
   attending: {

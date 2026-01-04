@@ -5,6 +5,7 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import TasksScreen from "./TasksScreen";
 import BandssScreen from "./BandsScreen";
 import ProfileScreen from "./ProfileScreen";
+import colors from "../constants/colors";
 
 function NavItem({ name, isActive, onPress }) {
   const IconComponent =
@@ -12,11 +13,11 @@ function NavItem({ name, isActive, onPress }) {
   const size = name === "map-marker" ? 40 : 30;
 
   return (
-    <TouchableOpacity onPress={onPress} style={styles.navItem}>
+  <TouchableOpacity onPress={onPress} style={styles.navItem}>
       <IconComponent
         name={name}
         size={size}
-        color={isActive ? "rgb(2, 150, 255)" : "#000"}
+    color={isActive ? colors.linkBlue : colors.black}
       />
     </TouchableOpacity>
   );
@@ -61,7 +62,7 @@ export default function MainScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff" },
+  container: { flex: 1, backgroundColor: colors.white },
   content: { flex: 1 },
   navBar: {
     position: "absolute",
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    backgroundColor: "rgb(190, 210, 209)",
+  backgroundColor: colors.pastelTeal,
     paddingBottom: Platform.OS === "ios" ? 25 : 10,
   },
   navItem: { alignItems: "center" },

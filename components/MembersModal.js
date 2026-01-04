@@ -10,6 +10,7 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import { people } from "../temp_data/People";
 import { getObjectById } from "../utils/DataHandle";
+import colors from "../constants/colors";
 import PersonSearchResault from "./PersonSearchResault";
 
 const MembersModal = ({ headLine, ids, modalVisible, setModalVisible }) => {
@@ -47,11 +48,11 @@ const MembersModal = ({ headLine, ids, modalVisible, setModalVisible }) => {
 const styles = StyleSheet.create({
   modalOverlay: {
     flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.3)",
+  backgroundColor: colors.blackTransparent,
     justifyContent: "flex-end",
   },
   modalContent: {
-    backgroundColor: "#fff",
+  backgroundColor: colors.white,
     padding: 25,
     maxHeight: "60%",
     minHeight: "40%",
