@@ -14,6 +14,7 @@ import NewEventScreen from "./screens/NewEventScreen";
 import NewSongScreen from "./screens/NewSongScreen";
 import SongScreen from "./screens/SongScreen";
 import LyricsFullScreen from "./screens/LyricsFullScreen";
+import MyFilesScreen from "./screens/MyFilesScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -72,6 +73,7 @@ export default function App() {
             gestureEnabled: false,
           }}
         />
+        <Stack.Screen name="MyFiles" component={MyFilesScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
