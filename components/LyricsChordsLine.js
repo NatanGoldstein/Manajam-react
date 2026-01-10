@@ -121,6 +121,7 @@ export default function LyricsChordsLine({
             ref={inputRef}
             style={styles.lyrics}
             value={lyricsTemp}
+            placeholder='New Lyrics Line'
             onChangeText={text => setLyricsTemp(text)}
             onSubmitEditing={() => {
               // create a new line right after this one

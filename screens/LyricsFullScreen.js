@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect} from "react";
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, TextInput, Button } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, TextInput, Button, TouchableWithoutFeedback } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import colors from "../constants/colors";
 import ChordsBar from "../components/ChordsBar";
 import LyricsChordsLine from "../components/LyricsChordsLine";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { KeyboardAvoidingView } from "react-native";
+import * as LDH from '../utils/LyricsFileDataHandle';
 
 export default function LyricsFullScreen() {
   const route = useRoute();
@@ -32,182 +32,11 @@ export default function LyricsFullScreen() {
     }
   }, [editing]);
 
-  // --- Block edit helpers ---
-  const createNewLyricsChordsBlock = (header = 'New Section') => {
-    const blockId = `${Date.now()}-${Math.random().toString(36).slice(2, 6)}-lc`;
-
-    const newBlock = {
-      id: blockId,
-      type: 'lyricsChords',
-      header,
-      lyrics: [
-        {
-          key: `${Date.now()}-l`,
-          text: '',
-        },
-      ],
-      chords: [],
-    };
-
-    setBlocksTemp(prev => [...prev, newBlock]);
-  };
-
-  const createNewChordsBlock = (header = 'New Chords Section') => {
-    const blockId = `${Date.now()}-${Math.random().toString(36).slice(2, 6)}-c`;
-    const barId = `${Date.now()}-b`;
-
-    const newBlock = {
-      id: blockId,
-      type: 'Chords',
-      header,
-      bars: [
-        {
-          id: barId,
-          chords: [],
-        },
-      ],
-    };
-
-    setBlocksTemp(prev => [...prev, newBlock]);
-  };
-
-
-
-  // Update an existing bar by blockId and barId
-  const updateBar = (blockId, barId, newBar) => {
-    setBlocksTemp(prev => prev.map(block => {
-      if (block.id !== blockId) return block;
-      return {
-        ...block,
-        bars: block.bars.map(b => b.id === barId ? { ...b, ...newBar } : b)
-      };
-    }));
-  };
-
-  // Create a new bar inside a block (appends to bars)
-  const createBar = (blockId, barData) => {
-    setBlocksTemp(prev => prev.map(block => {
-      if (block.id !== blockId) return block;
-      const newBar = {
-        id: `${Date.now()}-${Math.random().toString(36).slice(2,6)}`,
-        chords: barData?.chords ?? [{id: "1", name: ""}],
-        ...barData,
-      };
-      return { ...block, bars: [...(block.bars || []), newBar] };
-    }));
-  };
-
-  // Delete a bar by blockId and barId
-  const deleteBar = (blockId, barId) => {
-    setBlocksTemp(prev => prev.map(block => {
-      if (block.id !== blockId) return block;
-      return { ...block, bars: (block.bars || []).filter(b => b.id !== barId) };
-    }));
-  };
-
-  // Update an existing lyrics line inside a lyricsChords block (by index)
-  const updateLyricsLine = (blockId, lineIndex, newText) => {
-    setBlocksTemp(prev => prev.map(block => {
-      if (block.id !== blockId) return block;
-      if (!block.lyrics) return block;
-      const lyrics = [...block.lyrics];
-      const prevKey = lyrics[lineIndex]?.key ?? `${Date.now()}-${Math.random().toString(36).slice(2,6)}`;
-      lyrics[lineIndex] = { key: prevKey, text: newText };
-      return { ...block, lyrics };
-    }));
-  };
-
-  // Update chords for a specific lyrics line inside a lyricsChords block
-  const updateLineChords = (blockId, lineIndex, newChords) => {
-    setBlocksTemp(prev => prev.map(block => {
-      if (block.id !== blockId) return block;
-      const remaining = (block.chords || []).filter(c => c.lineIndex !== lineIndex);
-      const normalized = (newChords || []).map(c => ({ ...c, lineIndex }));
-      return { ...block, chords: [...remaining, ...normalized] };
-    }));
-  };
-
-  // Create a new lyrics line inside a lyricsChords block (append or insert)
-  // If insertIndex is provided, insert the new line after insertIndex
-  const createLyricsLine = (blockId, lineText = '', insertIndex = null) => {
-    const newKey = `${Date.now()}-${Math.random().toString(36).slice(2, 6)}-l`;
-
-    setBlocksTemp(prev => prev.map(block => {
-      if (block.id !== blockId) return block;
-
-      const lyrics = [...(block.lyrics || [])];
-      const chords = [...(block.chords || [])];
-
-      const newLineObj = { key: newKey, text: lineText };
-
-      let insertAt;
-      if (insertIndex === null || insertIndex < 0 || insertIndex >= lyrics.length) {
-        insertAt = lyrics.length;
-        lyrics.push(newLineObj);
-      } else {
-        insertAt = insertIndex + 1;
-        lyrics.splice(insertAt, 0, newLineObj);
-      }
-
-      // Shift chords that belong to lines AFTER the insertion point
-      const shiftedChords = chords.map(c =>
-        c.lineIndex >= insertAt ? { ...c, lineIndex: c.lineIndex + 1 } : c
-      );
-
-      return {
-        ...block,
-        lyrics,
-        chords: shiftedChords,
-      };
-    }));
-
-    // focus handling (if inserted in middle)
-    if (insertIndex !== null && insertIndex >= 0) {
-      setLyricsFocusTarget({ blockId, lineIndex: insertIndex + 1 });
+  const handleEdit = () => {
+    if (editing) {
+      // TODO - add backend function to commit changes to DB
     }
-  };
-
-
-  // Delete a lyrics line and remove/shift chords accordingly
-  const deleteLyricsLine = (blockId, lineIndex) => {
-    setBlocksTemp(prev =>
-      prev.map(block => {
-        if (block.id !== blockId) return block;
-        if (!block.lyrics || lineIndex < 0 || lineIndex >= block.lyrics.length) {
-          return block;
-        }
-
-        // Remove lyric line
-        const lyrics = [...block.lyrics];
-        lyrics.splice(lineIndex, 1);
-
-        // Remove chords on this line + shift following lines up
-        const chords = (block.chords || [])
-          .filter(chord => chord.lineIndex !== lineIndex)
-          .map(chord =>
-            chord.lineIndex > lineIndex
-              ? { ...chord, lineIndex: chord.lineIndex - 1 }
-              : chord
-          );
-
-        return {
-          ...block,
-          lyrics,
-          chords,
-        };
-      })
-    );
-  };
-
-  // Update header for a specific block
-  const updateBlockHeader = (blockId, newHeader) => {
-    setBlocksTemp(prev =>
-      prev.map(block =>
-        block.id === blockId
-          ? { ...block, header: newHeader }
-          : block
-      )
-    );
+    setEditing(!editing);
   };
 
 
@@ -223,7 +52,7 @@ export default function LyricsFullScreen() {
           <Text style={styles.backText}>X</Text>
         </TouchableOpacity>
         <Text style={styles.headerTitle}>{name}</Text>
-        <TouchableOpacity style={styles.editButton} onPress={() => setEditing(!editing)}>
+        <TouchableOpacity style={styles.editButton} onPress={() => handleEdit()}>
           {editing ? (
             <Text style={styles.doneText}>Done</Text>
           ) : (
@@ -244,7 +73,9 @@ export default function LyricsFullScreen() {
               <TextInput 
                 style={styles.header} 
                 value={block.header}
-                onChangeText={text => updateBlockHeader(block.id, text)}
+                placeholder="New Section"
+                onChangeText={text => LDH.updateBlockHeader(block.id, text, setBlocksTemp)}
+                autoFocus={editing && (!block.header || block.header.length === 0)}
               />
               :
               <Text style={styles.header}>{block.header}</Text>
@@ -260,10 +91,10 @@ export default function LyricsFullScreen() {
                     editMode={editing}
                     scrollToggle={setEnableScroll}
                     // commit helpers
-                    updateLyricsLine={(idx, newLine) => updateLyricsLine(block.id, idx, newLine)}
-                    createLyricsLine={(text, insertIndex = null) => createLyricsLine(block.id, text, insertIndex)}
-                    deleteLyricsLine={(idx) => deleteLyricsLine(block.id, idx)}
-                    updateLineChords={(newChords) => updateLineChords(block.id, lineIndex, newChords)}
+                    updateLyricsLine={(idx, newLine) => LDH.updateLyricsLine(block.id, idx, newLine, setBlocksTemp)}
+                    createLyricsLine={(text, insertIndex = null) => LDH.createLyricsLine(block.id, text, insertIndex, setBlocksTemp, setLyricsFocusTarget)}
+                    deleteLyricsLine={(idx) => LDH.deleteLyricsLine(block.id, idx, setBlocksTemp)}
+                    updateLineChords={(newChords) => LDH.updateLineChords(block.id, lineIndex, newChords, setBlocksTemp)}
                     lyricsFocusTarget={lyricsFocusTarget}
                     onLyricsFocusHandled={() => setLyricsFocusTarget(null)}
                   />))}
@@ -278,13 +109,13 @@ export default function LyricsFullScreen() {
                         editMode={editing}
                         setChords={setBlocksTemp}
                         // commit helpers
-                        updateBar={(newBar) => updateBar(block.id, bar.id, newBar)}
-                        createBar={(barData) => createBar(block.id, barData)}
-                        deleteBar={() => deleteBar(block.id, bar.id)}
+                        updateBar={(newBar) => LDH.updateBar(block.id, bar.id, newBar, setBlocksTemp)}
+                        createBar={(barData) => LDH.createBar(block.id, barData, setBlocksTemp)}
+                        deleteBar={() => LDH.deleteBar(block.id, bar.id, setBlocksTemp)}
                       />
                     ))}
                     {editing && (
-                      <TouchableOpacity style={styles.addBarButton} onPress={() => createBar(block.id, {})}>
+                      <TouchableOpacity style={styles.addBarButton} onPress={() => LDH.createBar(block.id, {}, setBlocksTemp)}>
                         <Text style={styles.addButtonText}>+</Text>
                       </TouchableOpacity>
                     )}
@@ -299,12 +130,17 @@ export default function LyricsFullScreen() {
               <Text style={styles.addSectionText}>+ Add new section</Text>
             </TouchableOpacity>)}
           {showFloating && (
+            <TouchableWithoutFeedback onPress={() => setShowFloating(false)}>
+              <View style={styles.overlay} />
+            </TouchableWithoutFeedback>
+          )}
+          {showFloating && (
             <View style={styles.floatingWindow}>
-              <TouchableOpacity style={styles.floatingButton} onPress={() => { createNewLyricsChordsBlock() }}>
+              <TouchableOpacity style={styles.floatingButton} onPress={() => { LDH.createNewLyricsChordsBlock('', setShowFloating, setBlocksTemp) }}>
                 <Text style={styles.floatingButtonText}>Lyrics & Chords</Text>
               </TouchableOpacity>
               <View style={styles.line} />
-              <TouchableOpacity style={styles.floatingButton} onPress={() => { createNewChordsBlock() }}>
+              <TouchableOpacity style={styles.floatingButton} onPress={() => { LDH.createNewChordsBlock('', setShowFloating, setBlocksTemp) }}>
                 <Text style={styles.floatingButtonText}>Chords</Text>
               </TouchableOpacity>
             </View>
@@ -400,6 +236,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 5,
     marginTop: 10,
+    marginBottom: 20,
     marginLeft: 10,
     shadowColor: colors.black,
     shadowOffset: { width: 0, height: 3 },
@@ -409,6 +246,15 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     zIndex: 9999,
+  },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'transparent',
+    zIndex: 9000,
   },
   floatingButton: {
     flexDirection: "row",
