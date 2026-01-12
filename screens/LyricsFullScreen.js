@@ -7,19 +7,21 @@ import ChordsBar from "../components/ChordsBar";
 import LyricsChordsLine from "../components/LyricsChordsLine";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as LDH from '../utils/LyricsFileDataHandle';
+import { getObjectById } from "../utils/DataHandle";
+import { lyricsFiles } from "../temp_data/LyricsFiles";
 
 export default function LyricsFullScreen() {
   const route = useRoute();
   const navigation = useNavigation();
   const song = route?.params?.song;
-  const [blocksTemp, setBlocksTemp] = useState(song?.blocks ?? []);
+  const lyricsFileId = song?.lyricsId;
+  const blocks = getObjectById(lyricsFileId, lyricsFiles ?? [])?.blocks ?? [];
+  const [blocksTemp, setBlocksTemp] = useState(blocks);
   const edit = route?.params?.edit ?? false;
 
   const name = song?.name ?? "Untitled";
-  const initialLyrics = song?.lyrics ?? "";
 
   const [editing, setEditing] = useState(edit);
-  const [text, setText] = useState(initialLyrics);
   const [showFloating, setShowFloating] = useState(false);
   const inputRef = useRef(null);
   const [lyricsFocusTarget, setLyricsFocusTarget] = useState(null);

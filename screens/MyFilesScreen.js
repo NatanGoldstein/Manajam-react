@@ -1,24 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Modal, TextInput } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../constants/colors";
-import { myLyricsFiles } from "../local_data/Files";
-import { mySheetFiles } from "../local_data/Files";
+import { lyricsFiles } from "../temp_data/LyricsFiles";
 import { useNavigation } from "@react-navigation/native";
+import CreateNewFileModal from "../components/CreateNewFileModal";
 
 export default function MyFilesScreen() {
   const navigation = useNavigation();
 
-  const lyricsFiles = myLyricsFiles;
-  const sheetFiles = mySheetFiles;
+  const [createModalVisible, setCreateModalVisible] = useState(false);
+
+  const sheetFiles = [];
 
   const handleCreateLyrics = () => {
-    navigation.navigate("NewSongScreen", { song: {}, state: "new" });
+    setCreateModalVisible(true);
   };
 
   const handleCreateSheet = () => {
-    navigation.navigate("NewSongScreen", { song: {}, state: "new" });
+    alert("Create Sheet - to be implemented");
   };
 
   return (
@@ -68,6 +69,10 @@ export default function MyFilesScreen() {
           )}
         </View>
       </ScrollView>
+      <CreateNewFileModal
+        modalVisible={createModalVisible}
+        setModalVisible={setCreateModalVisible}
+      />
     </SafeAreaView>
   );
 }

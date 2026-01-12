@@ -5,6 +5,8 @@ import { Ionicons, Feather, MaterialIcons } from "@expo/vector-icons";
 import AudioPlayer from "../components/AudioPlayer";
 import colors from "../constants/colors";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { getObjectById } from "../utils/DataHandle";
+import { lyricsFiles } from "../temp_data/LyricsFiles";
 
 export default function SongScreen(props) {
   const route = useRoute();
@@ -14,7 +16,9 @@ export default function SongScreen(props) {
 
   // local derived values
   const name = song?.name ?? "Untitled";
-  const lyrics =  song.blocks.filter(block => block.type === 'lyricsChords').flatMap(block => block.lyrics);
+  const lyricsFileId = song?.lyricsId;
+  const blocks = getObjectById(lyricsFileId, lyricsFiles ?? [])?.blocks ?? [];
+  const lyrics =  blocks.filter(block => block.type === 'lyricsChords').flatMap(block => block.lyrics);
   const sheets = song?.sheets ?? [];
 
   return (

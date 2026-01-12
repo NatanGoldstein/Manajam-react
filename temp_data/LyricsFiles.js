@@ -1,7 +1,9 @@
-const myLyricsFiles = [
+export const lyricsFiles = [
         { 
             id: '1',
             name: 'Blue Mirage',
+            userIds: ['1', '2'],
+            bandIds: ['1'],
             lastUpdate: '2025-11-05',
             blocks: [
                 { 
@@ -62,7 +64,3 @@ const myLyricsFiles = [
             ],
         },
 ];
-
-const mySheetFiles = [];
-
-export { myLyricsFiles, mySheetFiles };
