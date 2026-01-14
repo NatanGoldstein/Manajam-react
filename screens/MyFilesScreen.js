@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Modal, TextInput } from "react-native";
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Modal, TextInput, FlatList } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../constants/colors";
 import { lyricsFiles } from "../temp_data/LyricsFiles";
 import { useNavigation } from "@react-navigation/native";
 import CreateNewFileModal from "../components/CreateNewFileModal";
+import { getUserId } from "../local_data/UserData";
+import LyricsFilePriview from "../components/LyricsFilePriview";
 
 export default function MyFilesScreen() {
   const navigation = useNavigation();
@@ -27,26 +29,25 @@ export default function MyFilesScreen() {
       <View style={styles.topBar}>
         <Text style={styles.headerTitle}>My Files</Text>
       </View>
-
-      <ScrollView contentContainerStyle={styles.scroll}>
         <View style={styles.section}>
-          <View style={styles.sectionHeader}>
+            <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>Lyrics & Chords Files</Text>
             <TouchableOpacity onPress={handleCreateLyrics}>
-              <Ionicons name="add-circle" size={28} color={colors.black} />
+                <Ionicons name="add-circle" size={28} color={colors.black} />
             </TouchableOpacity>
-          </View>
-
-          {lyricsFiles.length === 0 ? (
-            <Text style={styles.empty}>No lyrics files</Text>
-          ) : (
-            lyricsFiles.map(file => (
-              <View key={file.id} style={styles.itemRow}>
-                <Text style={styles.itemText}>{file.name}</Text>
-                <Text style={styles.itemDate}>{file.lastUpdate}</Text>
-              </View>
-            ))
-          )}
+            </View>
+            {lyricsFiles.length === 0 ? (
+                <Text style={styles.empty}>No lyrics files</Text>
+            ) : (
+                <FlatList
+                    data={lyricsFiles.filter(file => file.userIds.includes(`${getUserId()}`))}
+                    numColumns={4}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item }) => (
+                        <LyricsFilePriview key={`${item.id}-lyrics`} file={item} />
+                    )}
+                />
+            )}
         </View>
 
         <View style={styles.section}>
@@ -68,7 +69,6 @@ export default function MyFilesScreen() {
             ))
           )}
         </View>
-      </ScrollView>
       <CreateNewFileModal
         modalVisible={createModalVisible}
         setModalVisible={setCreateModalVisible}
@@ -84,7 +84,8 @@ const styles = StyleSheet.create({
     },
     topBar: { 
         height: 50, 
-        justifyContent: "center" 
+        justifyContent: "center" ,
+        marginBottom: 10,
     },
     headerTitle: { 
         alignSelf: "center", 
@@ -93,10 +94,12 @@ const styles = StyleSheet.create({
         color: colors.black 
     },
     scroll: { 
-        padding: 20 
+        flexDirection: "column" ,
     },
     section: { 
-        marginBottom: 28 
+        marginBottom: 28,
+        paddingHorizontal: 15,
+        height: '40%',
     },
     sectionHeader: { 
         flexDirection: "row", 

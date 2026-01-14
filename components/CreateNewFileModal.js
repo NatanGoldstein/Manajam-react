@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import colors from "../constants/colors";
 import { useNavigation } from "@react-navigation/native";
+import { lyricsFiles } from "../temp_data/LyricsFiles";
 
 const CreateNewFileModal = ({ modalVisible, setModalVisible }) => {
     const navigation = useNavigation();
@@ -16,7 +17,7 @@ const CreateNewFileModal = ({ modalVisible, setModalVisible }) => {
     const handleConfirmCreateLyrics = () => {
         const inputName = newFileName && newFileName.trim().length > 0 ? newFileName.trim() : "Untitled";
         setModalVisible(false);
-        navigation.navigate("LyricsFull", { song: { name: inputName, blocks: [] }, edit: true });
+        navigation.navigate("LyricsFull", { lyricsFileId: null, edit: true, name: inputName });
     };
 
   return (
@@ -37,7 +38,7 @@ const CreateNewFileModal = ({ modalVisible, setModalVisible }) => {
                 autoFocus
             />
             <View style={styles.modalActions}>
-                <TouchableOpacity style={styles.modalButton} onPress={() => setCreateModalVisible(false)}>
+                <TouchableOpacity style={styles.modalButton} onPress={() => setModalVisible(false)}>
                 <Text style={styles.modalButtonText}>Cancel</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.modalButton, styles.modalPrimary]} onPress={handleConfirmCreateLyrics}>

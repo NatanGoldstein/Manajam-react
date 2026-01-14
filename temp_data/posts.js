@@ -59,4 +59,16 @@ export const posts = [
     title: "Guitar player needed",
     details: "Rock band looking for lead guitar",
   },
+  {
+    id: "11",
+    billboardId: "BRC",
+    title: "Guitar player needed",
+    details: "Rock band looking for lead guitar",
+  },
+  {
+    id: "12",
+    billboardId: "BRC",
+    title: "Guitar player needed",
+    details: "Rock band looking for lead guitar",
+  },
 ];

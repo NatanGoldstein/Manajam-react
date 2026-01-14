@@ -13,13 +13,13 @@ import { lyricsFiles } from "../temp_data/LyricsFiles";
 export default function LyricsFullScreen() {
   const route = useRoute();
   const navigation = useNavigation();
-  const song = route?.params?.song;
-  const lyricsFileId = song?.lyricsId;
-  const blocks = getObjectById(lyricsFileId, lyricsFiles ?? [])?.blocks ?? [];
+  const lyricsFileId = route?.params?.lyricsFileId;
+  const lyricsFile = getObjectById(lyricsFileId, lyricsFiles);
+  const blocks = lyricsFile?.blocks ?? [];
   const [blocksTemp, setBlocksTemp] = useState(blocks);
   const edit = route?.params?.edit ?? false;
 
-  const name = song?.name ?? "Untitled";
+  const name = lyricsFile?.name ?? route?.params?.name ?? "Untitled";
 
   const [editing, setEditing] = useState(edit);
   const [showFloating, setShowFloating] = useState(false);
@@ -92,7 +92,7 @@ export default function LyricsFullScreen() {
                     chords={block.chords.filter(chord => chord.lineIndex === lineIndex)}
                     editMode={editing}
                     scrollToggle={setEnableScroll}
-                    // commit helpers
+                    /* commit helpers */
                     updateLyricsLine={(idx, newLine) => LDH.updateLyricsLine(block.id, idx, newLine, setBlocksTemp)}
                     createLyricsLine={(text, insertIndex = null) => LDH.createLyricsLine(block.id, text, insertIndex, setBlocksTemp, setLyricsFocusTarget)}
                     deleteLyricsLine={(idx) => LDH.deleteLyricsLine(block.id, idx, setBlocksTemp)}

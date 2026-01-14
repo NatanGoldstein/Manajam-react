@@ -6,7 +6,7 @@ export const songs = [
     audioUrl:
       'https://github.com/NatanGoldstein/Manajam-react/raw/refs/heads/Screens/BandProfileScreen/assets/songExm.mp3',
     lastUpdate: "2025-11-05",
-    lyricsId: '1',
+    lyricsFileId: '1',
     sheets: [],
   },
   {
@@ -16,7 +16,7 @@ export const songs = [
     audioUrl:
       'https://github.com/NatanGoldstein/Manajam-react/raw/refs/heads/Screens/BandProfileScreen/assets/songExm.mp3',
     lastUpdate: "2025-11-05",
-    lyricsId: '1',
+    lyricsFileId: '1',
     sheets: [],
   },
   {
@@ -26,7 +26,7 @@ export const songs = [
     audioUrl:
       'https://github.com/NatanGoldstein/Manajam-react/raw/refs/heads/Screens/BandProfileScreen/assets/songExm.mp3',
     lastUpdate: "2025-11-05",
-    lyricsId: '1',
+    lyricsFileId: '1',
     sheets: [],
   },
   {
@@ -36,7 +36,7 @@ export const songs = [
     audioUrl:
       'https://github.com/NatanGoldstein/Manajam-react/raw/refs/heads/Screens/BandProfileScreen/assets/songExm.mp3',
     lastUpdate: "2025-11-05",
-    lyricsId: '1',
+    lyricsFileId: '1',
     sheets: [],
   },
   {
@@ -46,7 +46,7 @@ export const songs = [
     audioUrl:
       'https://github.com/NatanGoldstein/Manajam-react/raw/refs/heads/Screens/BandProfileScreen/assets/songExm.mp3',
     lastUpdate: "2025-11-05",
-    lyricsId: '1',
+    lyricsFileId: '1',
     sheets: [],
   },
 ];

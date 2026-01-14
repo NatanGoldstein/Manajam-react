@@ -59,6 +59,15 @@ export default function NewSongScreen() {
     }
   };
 
+  function handleCreateLyricsFile() {
+    setShowFloatingWindow2(false);
+    if (name == "" || name == null) {
+      alert("Please enter a song name first");
+      return;
+    }
+    navigation.navigate("LyricsFull", {lyricsFileId: null, edit: true, name: name});
+  };
+
   return (
     <View>
       <View style={styles.topBar}>
@@ -162,7 +171,7 @@ export default function NewSongScreen() {
           <TouchableOpacity
             style={styles.floatingButton}
             onPress={() => {   
-              // TODO: add upload local file logic
+              handleCreateLyricsFile();
             }}
           >
             <Ionicons name="add-circle-outline" size={22} color={colors.darkGray} marginRight={5} />

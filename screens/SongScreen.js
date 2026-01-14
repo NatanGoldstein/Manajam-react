@@ -16,7 +16,7 @@ export default function SongScreen(props) {
 
   // local derived values
   const name = song?.name ?? "Untitled";
-  const lyricsFileId = song?.lyricsId;
+  const lyricsFileId = song?.lyricsFileId;
   const blocks = getObjectById(lyricsFileId, lyricsFiles ?? [])?.blocks ?? [];
   const lyrics =  blocks.filter(block => block.type === 'lyricsChords').flatMap(block => block.lyrics);
   const sheets = song?.sheets ?? [];
@@ -47,11 +47,11 @@ export default function SongScreen(props) {
             }}>
                 <Text style={styles.sectionTitle}>Lyrics</Text>
                 <TouchableOpacity onPress={() => 
-                    navigation.navigate("LyricsFull", { song: song, edit: true})}>
+                    navigation.navigate("LyricsFull", { lyricsFileId: song.lyricsFileId, edit: true})}>
                     <Feather name={"edit-2"} size={20} paddingRight={10}/>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.fullScreen} onPress={() => {
-                    navigation.navigate("LyricsFull", { song: song })}
+                    navigation.navigate("LyricsFull", { lyricsFileId: song.lyricsFileId, edit: false});}
                 }>
                     <MaterialIcons name={"fullscreen"} size={25} />
                 </TouchableOpacity>
