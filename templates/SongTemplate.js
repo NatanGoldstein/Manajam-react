@@ -8,7 +8,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { getObjectById } from "../utils/DataHandle";
 import { lyricsFiles } from "../temp_data/LyricsFiles";
 
-export default function SongScreen(props) {
+export default function SongTemplate(props) {
   const route = useRoute();
   const navigation = useNavigation();
   const songFromRoute = route?.params?.song;

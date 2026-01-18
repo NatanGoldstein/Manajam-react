@@ -12,12 +12,14 @@ import { posts } from "../temp_data/posts";
 import Post from "../components/Post";
 import colors from "../constants/colors";
 
-export default function BillboardScreen({ billboardId, closeFunction }) {
+export default function BillboardTemplate({ billboardId, closeFunction }) {
   const billboard = Billboards.find((b) => b.id === billboardId);
 
-  const relevantPosts = posts
-    .filter((post) => post.billboardId === billboardId)
-    .sort((a, b) => a.title.localeCompare(b.title)); // Example: alphabetical
+  const relevantPosts = posts.filter(
+    (post) => post.billboardId === billboardId
+  ).sort(
+    (a, b) => a.title.localeCompare(b.title)
+  );
 
   return (
     <SafeAreaView style={styles.screen}>

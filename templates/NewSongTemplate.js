@@ -13,7 +13,7 @@ import { getObjectById } from "../utils/DataHandle";
 import { bands } from "../temp_data/Bands";
 import colors from "../constants/colors";
 
-export default function NewSongScreen() {
+export default function NewSongTemplate() {
   const route = useRoute();
   const navigation = useNavigation();
   const { song, state } = route.params;

@@ -21,7 +21,7 @@ import { useCallback } from "react";
 import BillboardsLayer from "../components/BillboardsLayer";
 import { Billboards } from "../temp_data/Billboards";
 import * as Location from "expo-location";
-import BillboardScreen from "./BillboardScreen";
+import BillboardTemplate from "../templates/BillboardTemplate";
 
 export default function MapScreen() {
   const navigation = useNavigation();
@@ -132,7 +132,7 @@ export default function MapScreen() {
       </Animated.View>
 
       {selectedBillboard && (
-        <BillboardScreen
+        <BillboardTemplate
           billboardId={selectedBillboard.id}
           closeFunction={() => setSelectedBillboard(null)}
         />

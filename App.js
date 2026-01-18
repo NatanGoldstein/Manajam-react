@@ -7,13 +7,13 @@ import MapScreen from "./screens/MapScreen";
 import MainScreen from "./screens/MainScreen";
 import SearchScreen from "./screens/SearchScreen";
 import ProfileScreen from "./screens/ProfileScreen";
-import BillboardScreen from "./screens/BillboardScreen";
+import BillboardTemplate from "./templates/BillboardTemplate";
 import BandssScreen from "./screens/BandsScreen";
-import BandProfileScreen from "./screens/BandProfileScreen";
-import NewEventScreen from "./screens/NewEventScreen";
-import NewSongScreen from "./screens/NewSongScreen";
-import SongScreen from "./screens/SongScreen";
-import LyricsFullScreen from "./screens/LyricsFullScreen";
+import BandProfileTemplate from "./templates/BandProfileTemplate";
+import NewEventTemplate from "./templates/NewEventTemplate";
+import NewSongTemplate from "./templates/NewSongTemplate";
+import SongTemplate from "./templates/SongTemplate";
+import LyricsFullTemplate from "./templates/LyricsFullTemplate";
 import MyFilesScreen from "./screens/MyFilesScreen";
 
 const Stack = createNativeStackNavigator();
@@ -45,12 +45,12 @@ export default function App() {
           }}
         />
         <Stack.Screen name="Profile" component={ProfileScreen} />
-        <Stack.Screen name="Billboard" component={BillboardScreen} />
+        <Stack.Screen name="Billboard" component={BillboardTemplate} />
         <Stack.Screen name="Bands" component={BandssScreen} />
-        <Stack.Screen name="BandProfile" component={BandProfileScreen} />
+        <Stack.Screen name="BandProfile" component={BandProfileTemplate} />
         <Stack.Screen
           name="NewEvent"
-          component={NewEventScreen}
+          component={NewEventTemplate}
           options={{
             presentation: "modal",
             animation: "slide_from_bottom",
@@ -58,16 +58,16 @@ export default function App() {
         />
         <Stack.Screen
           name="NewSong"
-          component={NewSongScreen}
+          component={NewSongTemplate}
           options={{
             presentation: "modal",
             animation: "slide_from_bottom",
           }}
         />
-        <Stack.Screen name="Song" component={SongScreen} />
+        <Stack.Screen name="Song" component={SongTemplate} />
         <Stack.Screen
           name="LyricsFull"
-          component={LyricsFullScreen}
+          component={LyricsFullTemplate}
           options={{
             animation: "slide_from_bottom",
             gestureEnabled: false,

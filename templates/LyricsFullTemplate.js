@@ -10,7 +10,7 @@ import * as LDH from '../utils/LyricsFileDataHandle';
 import { getObjectById } from "../utils/DataHandle";
 import { lyricsFiles } from "../temp_data/LyricsFiles";
 
-export default function LyricsFullScreen() {
+export default function LyricsFullTemplate() {
   const route = useRoute();
   const navigation = useNavigation();
   const lyricsFileId = route?.params?.lyricsFileId;
