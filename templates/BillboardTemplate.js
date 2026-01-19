@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   backgroundColor: colors.white,
     borderRadius: 20,
-  padding: 15,
+  paddingTop: 20,
   shadowColor: colors.black,
     shadowOpacity: 0.3,
     shadowOffset: { width: 0, height: 2 },
@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "bold",
     marginBottom: 15,
+    paddingLeft: 20,
   },
   noPosts: {
     fontStyle: "italic",
