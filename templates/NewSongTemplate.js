@@ -13,7 +13,7 @@ import { getObjectById } from "../utils/DataHandle";
 import { bands } from "../temp_data/Bands";
 import colors from "../constants/colors";
 
-export default function NewSongScreen() {
+export default function NewSongTemplate() {
   const route = useRoute();
   const navigation = useNavigation();
   const { song, state } = route.params;
@@ -57,6 +57,15 @@ export default function NewSongScreen() {
     } else {
       setSheets((prev) => [...prev, songId]);
     }
+  };
+
+  function handleCreateLyricsFile() {
+    setShowFloatingWindow2(false);
+    if (name == "" || name == null) {
+      alert("Please enter a song name first");
+      return;
+    }
+    navigation.navigate("LyricsFull", {lyricsFileId: null, edit: true, name: name});
   };
 
   return (
@@ -162,7 +171,7 @@ export default function NewSongScreen() {
           <TouchableOpacity
             style={styles.floatingButton}
             onPress={() => {   
-              // TODO: add upload local file logic
+              handleCreateLyricsFile();
             }}
           >
             <Ionicons name="add-circle-outline" size={22} color={colors.darkGray} marginRight={5} />

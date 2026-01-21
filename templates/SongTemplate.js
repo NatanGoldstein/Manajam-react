@@ -5,8 +5,10 @@ import { Ionicons, Feather, MaterialIcons } from "@expo/vector-icons";
 import AudioPlayer from "../components/AudioPlayer";
 import colors from "../constants/colors";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { getObjectById } from "../utils/DataHandle";
+import { lyricsFiles } from "../temp_data/LyricsFiles";
 
-export default function SongScreen(props) {
+export default function SongTemplate(props) {
   const route = useRoute();
   const navigation = useNavigation();
   const songFromRoute = route?.params?.song;
@@ -14,7 +16,9 @@ export default function SongScreen(props) {
 
   // local derived values
   const name = song?.name ?? "Untitled";
-  const lyrics =  song.blocks.filter(block => block.type === 'lyricsChords').flatMap(block => block.lyrics);
+  const lyricsFileId = song?.lyricsFileId;
+  const blocks = getObjectById(lyricsFileId, lyricsFiles ?? [])?.blocks ?? [];
+  const lyrics =  blocks.filter(block => block.type === 'lyricsChords').flatMap(block => block.lyrics);
   const sheets = song?.sheets ?? [];
 
   return (
@@ -43,11 +47,11 @@ export default function SongScreen(props) {
             }}>
                 <Text style={styles.sectionTitle}>Lyrics</Text>
                 <TouchableOpacity onPress={() => 
-                    navigation.navigate("LyricsFull", { song: song, edit: true})}>
+                    navigation.navigate("LyricsFull", { lyricsFileId: song.lyricsFileId, edit: true})}>
                     <Feather name={"edit-2"} size={20} paddingRight={10}/>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.fullScreen} onPress={() => {
-                    navigation.navigate("LyricsFull", { song: song })}
+                    navigation.navigate("LyricsFull", { lyricsFileId: song.lyricsFileId, edit: false});}
                 }>
                     <MaterialIcons name={"fullscreen"} size={25} />
                 </TouchableOpacity>

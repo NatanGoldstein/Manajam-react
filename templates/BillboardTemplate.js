@@ -12,12 +12,14 @@ import { posts } from "../temp_data/posts";
 import Post from "../components/Post";
 import colors from "../constants/colors";
 
-export default function BillboardScreen({ billboardId, closeFunction }) {
+export default function BillboardTemplate({ billboardId, closeFunction }) {
   const billboard = Billboards.find((b) => b.id === billboardId);
 
-  const relevantPosts = posts
-    .filter((post) => post.billboardId === billboardId)
-    .sort((a, b) => a.title.localeCompare(b.title)); // Example: alphabetical
+  const relevantPosts = posts.filter(
+    (post) => post.billboardId === billboardId
+  ).sort(
+    (a, b) => a.title.localeCompare(b.title)
+  );
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -60,7 +62,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   backgroundColor: colors.white,
     borderRadius: 20,
-  padding: 15,
+  paddingTop: 20,
   shadowColor: colors.black,
     shadowOpacity: 0.3,
     shadowOffset: { width: 0, height: 2 },
@@ -78,6 +80,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "bold",
     marginBottom: 15,
+    paddingLeft: 20,
   },
   noPosts: {
     fontStyle: "italic",

@@ -21,7 +21,7 @@ import Collapsible from "react-native-collapsible";
 import { selectionAsync } from "expo-haptics";
 import colors from "../constants/colors";
 
-export default function NewEventScreen() {
+export default function NewEventTemplate() {
   const route = useRoute();
   const navigation = useNavigation();
   const endTimeRef = useRef(null);

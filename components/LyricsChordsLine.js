@@ -84,6 +84,16 @@ export default function LyricsChordsLine({
     prevEditRef.current = editMode;
   }, [editMode]);
 
+  const handleTextChange = (text) => {
+    setLyricsTemp(text);
+    console.log(lyricsTemp.length);
+    if (lyricsTemp.length >= 28) {
+      const lastWord = lyricsTemp.split(' ').pop();
+      setLyricsTemp(lyricsTemp.replace(lastWord, ''));
+      createLyricsLine(`${lastWord}`, lineIndex);
+    };
+  };
+
   return (
     <View>
       {editMode ? (
@@ -121,7 +131,8 @@ export default function LyricsChordsLine({
             ref={inputRef}
             style={styles.lyrics}
             value={lyricsTemp}
-            onChangeText={text => setLyricsTemp(text)}
+            placeholder='New Lyrics Line'
+            onChangeText={text => handleTextChange(text)}
             onSubmitEditing={() => {
               // create a new line right after this one
               if (typeof createLyricsLine === 'function') {

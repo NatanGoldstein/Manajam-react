@@ -23,7 +23,7 @@ function NavItem({ name, isActive, onPress }) {
   );
 }
 
-export default function BandProfileScreen() {
+export default function BandProfileTemplate() {
   const route = useRoute();
   const { band } = route.params; // ✅ pull from navigation params
   const navigation = useNavigation();
