@@ -10,11 +10,12 @@ import { Feather, Ionicons } from "@expo/vector-icons";
 import * as Haptics from 'expo-haptics';
 import MembersModal from "./MembersModal";
 import colors from "../constants/colors";
+import { timeAgo } from "../utils/DateTimeHandle";
 
 const Task = ({ task, setTaskName, setTaskDetails, setSelectedMembers, setCollapsed, confettiRef }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
-  const date = task.assignDate.toISOString().split("T")[0];
+  const date = timeAgo(task.assignDate);
   const [done, setDone] = useState(task.done);
 
   return (

@@ -5,8 +5,8 @@ export const songs = [
     name: "Blue Mirage",
     audioUrl:
       'https://github.com/NatanGoldstein/Manajam-react/raw/refs/heads/Screens/BandProfileScreen/assets/songExm.mp3',
-    lastUpdate: "2025-11-05",
-    lyricsFileId: '1',
+    lastUpdate: "2026-01-23T14:32:10.123Z",
+    lyricsFileId: 1,
     sheets: [],
   },
   {
@@ -15,8 +15,8 @@ export const songs = [
     name: "Red Mirage",
     audioUrl:
       'https://github.com/NatanGoldstein/Manajam-react/raw/refs/heads/Screens/BandProfileScreen/assets/songExm.mp3',
-    lastUpdate: "2025-11-05",
-    lyricsFileId: '1',
+    lastUpdate: "2026-01-23T14:32:10.123Z",
+    lyricsFileId: 1,
     sheets: [],
   },
   {
@@ -25,8 +25,8 @@ export const songs = [
     name: "Blue Mirage",
     audioUrl:
       'https://github.com/NatanGoldstein/Manajam-react/raw/refs/heads/Screens/BandProfileScreen/assets/songExm.mp3',
-    lastUpdate: "2025-11-05",
-    lyricsFileId: '1',
+    lastUpdate: "2026-01-23T14:32:10.123Z",
+    lyricsFileId: 1,
     sheets: [],
   },
   {
@@ -35,8 +35,8 @@ export const songs = [
     name: "Blue Mirage",
     audioUrl:
       'https://github.com/NatanGoldstein/Manajam-react/raw/refs/heads/Screens/BandProfileScreen/assets/songExm.mp3',
-    lastUpdate: "2025-11-05",
-    lyricsFileId: '1',
+    lastUpdate: "2026-01-23T14:32:10.123Z",
+    lyricsFileId: 1,
     sheets: [],
   },
   {
@@ -45,8 +45,8 @@ export const songs = [
     name: "Blue Mirage",
     audioUrl:
       'https://github.com/NatanGoldstein/Manajam-react/raw/refs/heads/Screens/BandProfileScreen/assets/songExm.mp3',
-    lastUpdate: "2025-11-05",
-    lyricsFileId: '1',
+    lastUpdate: "2026-01-23T14:32:10.123Z",
+    lyricsFileId: 1,
     sheets: [],
   },
 ];

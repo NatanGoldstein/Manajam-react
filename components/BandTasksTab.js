@@ -12,7 +12,7 @@ import Collapsible from "react-native-collapsible";
 import { Ionicons } from "@expo/vector-icons";
 import Task from "./Task";
 import { tasks } from "../temp_data/Tasks";
-import { people } from "../temp_data/People";
+import { users } from "../temp_data/Users";
 import { getObjectById } from "../utils/DataHandle";
 import colors from "../constants/colors";
 import { useRef } from "react";
@@ -121,7 +121,7 @@ export default function BandTasksTab({ band }) {
               <Collapsible collapsed={ownersCollapsed}>
               <ScrollView style={styles.drawer}>
                 {band.membersIds.map((memberId) => {
-                  const member = getObjectById(memberId, people);
+                  const member = getObjectById(memberId, users);
                   if (!member) {
                     return null;
                   }

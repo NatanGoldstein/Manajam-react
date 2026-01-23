@@ -12,8 +12,9 @@ import { users } from "../temp_data/Users";
 import { getObjectById } from "../utils/DataHandle";
 import colors from "../constants/colors";
 import PersonSearchResault from "./PersonSearchResault";
+import { posts } from "../temp_data/posts";
 
-const MembersModal = ({ headLine, ids, modalVisible, setModalVisible }) => {
+const CommentsModal = ({ headLine, postId, modalVisible, setModalVisible }) => {
   useFocusEffect(
     useCallback(() => {
       return () => {
@@ -21,6 +22,8 @@ const MembersModal = ({ headLine, ids, modalVisible, setModalVisible }) => {
       };
     }, []),
   );
+
+  const commentIds = getObjectById(postId, posts).commentIds;
 
   return (
     <Modal visible={modalVisible} transparent animationType="slide">
@@ -31,14 +34,16 @@ const MembersModal = ({ headLine, ids, modalVisible, setModalVisible }) => {
         />
         <View style={styles.modalContent}>
           <Text style={styles.moodalHeader}>{headLine}</Text>
-          <ScrollView>
-            {ids.map((personId) => (
-              <PersonSearchResault
-                key={personId}
-                person={getObjectById(personId, users)}
+          <ScrollView style={styles.commentsList}>
+            {commentIds.map((commentId) => (
+              <Comment
+                key={commentId}
               />
             ))}
           </ScrollView>
+          <AppTextInput
+            placeholder="Write a comment..."
+          />
         </View>
       </View>
     </Modal>
@@ -67,6 +72,9 @@ const styles = StyleSheet.create({
   greyArea: {
     flex: 1,
   },
+  commentsList: {
+    marginBottom: 10,
+  },
 });
 
-export default MembersModal;
+export default CommentsModal;

@@ -1,13 +1,13 @@
 export const lyricsFiles = [
         { 
-            id: '1',
+            id: 1,
             name: 'Blue Mirage',
             userIds: ['1', '2'],
             bandIds: ['1'],
-            lastUpdate: '2025-11-05',
+            lastUpdate: '2026-01-20T10:15:30.000Z',
             blocks: [
                 { 
-                    id: '1', 
+                    id: 1, 
                     type: 'lyricsChords', 
                     header: 'Verse 1',
                     lyrics: [
@@ -28,31 +28,31 @@ export const lyricsFiles = [
                     ],
                 },
                 { 
-                    id: '2', 
+                    id: 2, 
                     type: 'Chords',
                     header: 'Bridge',
                     bars: [
                     {
-                        id: '1', 
+                        id: 1, 
                         chords: [
                             {id: "1", name: "F"}, 
                             {id: "2", name: "G"},
                         ]
                     },
-                    { id: '2', 
+                    { id: 2, 
                         chords: [
                             {id: "1", name: "F"}, 
                             {id: "2", name: "G"},
                             {id: "3", name: "C"},
                         ]
                     },
-                    { id: '3', 
+                    { id: 3, 
                         chords: [
                             {id: "1", name: "F"}, 
                             {id: "2", name: "G"},
                         ]
                     },
-                    { id: '4', 
+                    { id: 4, 
                         chords: [
                             {id: "1", name: "F"}, 
                             {id: "2", name: "G"},

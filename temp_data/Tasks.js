@@ -5,7 +5,7 @@ export const tasks = [
     name: "Book rehearsal room",
     details: "Contact Groove Studio for next week session",
     owners: [1, 2],
-    assignDate: new Date("2025-11-01"),
+    assignDate: "2026-01-23T14:32:10.123Z",
     done: false,
   },
   {
@@ -14,7 +14,7 @@ export const tasks = [
     name: "Book rehearsal room",
     details: "Contact Groove Studio for next week session",
     owners: [3, 2],
-    assignDate: new Date("2025-11-01"),
+    assignDate: "2026-01-23T14:32:10.123Z",
     done: false,
   },
   {
@@ -23,7 +23,7 @@ export const tasks = [
     name: "Book rehearsal room",
     details: "Contact Groove Studio for next week session",
     owners: [1],
-    assignDate: new Date("2025-11-01"),
+    assignDate: "2026-01-23T14:32:10.123Z",
     done: false,
   },
   {
@@ -32,7 +32,7 @@ export const tasks = [
     name: "Book rehearsal room",
     details: "Contact Groove Studio for next week session",
     owners: [1],
-    assignDate: new Date("2025-11-01"),
+    assignDate: "2026-01-23T14:32:10.123Z",
     done: false,
   },
 ];

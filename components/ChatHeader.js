@@ -2,11 +2,13 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import colors from "../constants/colors";
 import { getObjectById } from "../utils/DataHandle";
-import { people } from "../temp_data/People";
+import { users } from "../temp_data/Users";
+import { formatDateTime, timeAgo } from "../utils/DateTimeHandle";
 
 const ChatHeader = ({ chat }) => {
-  const user = getObjectById(chat.userId, people);
+  const user = getObjectById(chat.userId, users);
   const unReadCount = chat.unRead;
+  const lastMessageTime = timeAgo(chat.lastMessageTime);
 
   return (
     <TouchableOpacity style={styles.container}>
@@ -16,7 +18,7 @@ const ChatHeader = ({ chat }) => {
           <Text style={styles.nameText}>
             {user.firstName} {user.lastName}
           </Text>
-          <Text style={styles.text}>{chat.lastMessageTime}</Text>
+          <Text style={styles.text}>{lastMessageTime}</Text>
         </View>
         <Text style={{ flex: 1 }}>{chat.lastMessage}</Text>
       </View>

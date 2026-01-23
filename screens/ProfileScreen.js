@@ -15,14 +15,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { bands } from "../temp_data/Bands";
 import { getObjectById } from "../utils/DataHandle";
 import { getUserId } from "../local_data/UserData";
-import { people } from "../temp_data/People";
+import { users } from "../temp_data/Users";
 
 export default function ProfileScreen() {
   const route = useRoute();
   let person;
   let isCurrentUser;
   if (route.name == "Main") {
-    person = getObjectById(getUserId(), people);
+    person = getObjectById(getUserId(), users);
     isCurrentUser = true;
   } else {
     ({ person, isCurrentUser } = route.params); // ✅ pull from navigation params

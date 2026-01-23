@@ -16,7 +16,7 @@ import Filter from "../components/Filters";
 import colors from "../constants/colors";
 import { searchResaults } from "../temp_data/SearchResaults";
 import PersonSearchResault from "../components/PersonSearchResault";
-import { people } from "../temp_data/People";
+import { users } from "../temp_data/Users";
 import { getObjectById } from "../utils/DataHandle";
 
 export default function SearchScreen() {

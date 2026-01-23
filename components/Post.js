@@ -1,24 +1,27 @@
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import colors from "../constants/colors";
 import { getObjectById } from "../utils/DataHandle";
-import { people } from "../temp_data/People";
+import { users } from "../temp_data/Users";
 import LikeButton from "./LikeButton";
+import { timeAgo } from "../utils/DateTimeHandle";
 //import CommentButton from "./CommentButton";
 
 const Post = ({ data }) => {
-  const user = getObjectById(data.userId, people);
-  const postDate = data.postDate.toDateString();
+  const user = getObjectById(data.userId, users);
+  const postDate = timeAgo(data.createdAt);
+  const navigation = useNavigation();
 
   return (
     <View style={styles.post}>
-      <View style={styles.userLine}>
+      <TouchableOpacity style={styles.userLine} onPress={() => navigation.navigate("Profile", { person: user })}>
         <Image
           source={{ uri: user.imageSource }}
           style={{ width: 40, height: 40, borderRadius: 20, marginRight: 10 }}
         />
         <Text style={styles.userName}>{user.firstName} {user.lastName}</Text>
-      </View>
+      </TouchableOpacity>
       <Image source={{ uri: data.imageUrl }} style={{ width: '100%', height: 380, marginBottom: 10 }} />
       <Text style={styles.title}>{data.title}</Text>
       <Text style={styles.content}>{data.details}</Text>
