@@ -6,7 +6,6 @@ import { getObjectById } from "../utils/DataHandle";
 import { users } from "../temp_data/Users";
 import LikeButton from "./LikeButton";
 import { timeAgo } from "../utils/DateTimeHandle";
-import CommentsModal from "./CommentsModal";
 import CommentButton from "./CommentButton";
 
 const Post = ({ data }) => {
@@ -19,11 +18,11 @@ const Post = ({ data }) => {
       <TouchableOpacity style={styles.userLine} onPress={() => navigation.navigate("Profile", { person: user })}>
         <Image
           source={{ uri: user.imageSource }}
-          style={{ width: 40, height: 40, borderRadius: 20, marginRight: 10 }}
+          style={{ width: 35, height: 35, borderRadius: 20, marginRight: 10 }}
         />
         <Text style={styles.userName}>{user.firstName} {user.lastName}</Text>
       </TouchableOpacity>
-      <Image source={{ uri: data.imageUrl }} style={{ width: '100%', height: 380, marginBottom: 10 }} />
+      <Image source={{ uri: data.imageUrl }} style={{ width: '100%', height: 320, marginBottom: 10 }} />
       <View style={{ flexDirection: "row", justifyContent: "flex-start", marginBottom: 5 }}>
         <LikeButton postId={data.id} />
         <CommentButton postId={data.id} />
@@ -56,13 +55,13 @@ const styles = StyleSheet.create({
   userLine: {
     flexDirection: "row",
     alignItems: "center",
-    height: 55,
+    height: 50,
     paddingHorizontal: 10,
     borderBottomWidth: 1,
     borderBottomColor: colors.lightGray,
   },
   userName: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "bold",
   },
   postDate: {

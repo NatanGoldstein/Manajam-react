@@ -97,7 +97,7 @@ export default function SearchScreen() {
           {searchResaults.map((personId) => (
             <PersonSearchResault
               key={personId}
-              person={getObjectById(personId, people)}
+              person={getObjectById(personId, users)}
             />
           ))}
         </ScrollView>
@@ -106,7 +106,7 @@ export default function SearchScreen() {
           {personSearchResaults.map((personId) => (
             <PersonSearchResault
               key={personId}
-              person={getObjectById(personId, people)}
+              person={getObjectById(personId, users)}
             />
           ))}
         </ScrollView>

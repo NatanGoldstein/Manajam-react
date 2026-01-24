@@ -9,21 +9,24 @@ import {
 import Event from "./Event";
 import { events } from "../temp_data/Events";
 import { getObjectById } from "../utils/DataHandle";
+import AppButton from "./AppButton";
 
 export default function BandScheduleTab({ band, navigation }) {
+  function createNewEvent(){
+      navigation.navigate("NewEvent", {
+        key: 1,
+        event: { bandId: band.id },
+        state: "new",
+      })
+  };
+
   return (
     <View>
-      <TouchableOpacity
-        style={styles.addButton}
-        onPress={() =>
-          navigation.navigate("NewEvent", {
-            event: { bandId: band.id },
-            state: "new",
-          })
-        }
-      >
-        <Text style={styles.addButtonText}>+ New Event</Text>
-      </TouchableOpacity>
+      <AppButton
+        text={"+ New Event"}
+        onPress={createNewEvent}
+        apllied={false}
+      />
       <ScrollView style={styles.sectionContent}>
         {band.eventIds.map((eventId) => {
           const event = getObjectById(eventId, events);

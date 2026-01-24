@@ -11,23 +11,25 @@ import SongHeader from "./SongHeader";
 import { songs } from "../temp_data/Songs";
 import { getObjectById } from "../utils/DataHandle";
 import { useNavigation } from "@react-navigation/native";
+import AppButton from "./AppButton";
 
 export default function BandSongsTab({ band }) {
   const navigation = useNavigation()
+
+  function createNewSong(){
+    navigation.navigate("NewSong", {
+      song: { bandId: band.id },
+      state: "new",
+    })
+  }
   
   return (
     <View>
-      <TouchableOpacity
-        style={styles.addButton}
-        onPress={() =>
-          navigation.navigate("NewSong", {
-            song: { bandId: band.id },
-            state: "new",
-          })
-        }
-      >
-        <Text style={styles.addButtonText}>+ New Song</Text>
-      </TouchableOpacity>
+      <AppButton
+        text={"+ New Song"}
+        onPress={createNewSong}
+        apllied={false}
+      />
       <ScrollView style={styles.sectionContent}>
         {band.songIds.map((songId) => {
           const song = getObjectById(songId, songs);

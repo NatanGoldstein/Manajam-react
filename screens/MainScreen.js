@@ -11,8 +11,7 @@ import colors from "../constants/colors";
 
 function NavItem({ name, isActive, onPress }) {
   const IconComponent =
-    name === "map-marker" ? MaterialCommunityIcons : 
-    name === "audio-file" ? MaterialIcons : Ionicons;
+    name === "map-marker" ? MaterialCommunityIcons : Ionicons;
   const size = name === "map-marker" ? 40 : 30;
 
   return (
@@ -61,7 +60,7 @@ export default function MainScreen() {
           onPress={() => setActiveTab("tasks")}
         />
         <NavItem
-          name="audio-file"
+          name="folder"
           isActive={activeTab === "myFiles"}
           onPress={() => setActiveTab("myFiles")}
         />

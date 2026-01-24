@@ -17,6 +17,7 @@ import { getObjectById } from "../utils/DataHandle";
 import colors from "../constants/colors";
 import { useRef } from "react";
 import ConfettiCannon from 'react-native-confetti-cannon';
+import AppButton from "./AppButton";
 
 export default function BandTasksTab({ band }) {
   const [collapsed, setCollapsed] = useState(true);
@@ -49,6 +50,15 @@ export default function BandTasksTab({ band }) {
     [isInTaskMembers],
   );
 
+  function handlePress(){
+    if(collapsed){
+      setCollapsed(false)
+    }
+    else{
+      confirmCancelNewTask()
+    }
+  };
+
   const handleNewTask = () => {
     resetNewTaskForm();
     alert("New Task Added");
@@ -72,14 +82,11 @@ export default function BandTasksTab({ band }) {
 
   return (
     <View>
-      <TouchableOpacity
-        style={styles.addButton}
-        onPress={() => (collapsed ? setCollapsed(false) : confirmCancelNewTask())}
-      >
-        <Text style={styles.addButtonText}>
-          {collapsed ? "+ New Task" : "Cancel"}
-        </Text>
-      </TouchableOpacity>
+      <AppButton
+        text={collapsed ? "+ New Task" : "Cancel"}
+        onPress={handlePress}
+        apllied={false}
+      />
       <Collapsible collapsed={collapsed}>
         <View style={styles.newTask}>
           <TextInput 

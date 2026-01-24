@@ -1,25 +1,63 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   FlatList,
+  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Billboards } from "../temp_data/Billboards";
 import { posts } from "../temp_data/posts";
 import Post from "../components/Post";
 import colors from "../constants/colors";
+import { Ionicons } from "@expo/vector-icons";
+import { getObjectById } from "../utils/DataHandle";
+import MembersModal from "../components/MembersModal";
+import { getUserId } from "../local_data/UserData";
+import { useNavigation } from "@react-navigation/native";
+import AppButton from "../components/AppButton";
 
 export default function BillboardTemplate({ billboardId, closeFunction }) {
-  const billboard = Billboards.find((b) => b.id === billboardId);
+  const navigation = useNavigation();
+  const billboard = getObjectById(billboardId, Billboards);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [following, setFollowing] = useState(billboard.userIds.includes(getUserId()));
 
   const relevantPosts = posts.filter(
     (post) => post.billboardId === billboardId
   ).sort(
     (a, b) => a.title.localeCompare(b.title)
   );
+
+  function handleFollow() {
+    if (following){
+      Alert.alert(
+        `Unfollow ${billboard.name} Billboard?`,
+        "",
+        [
+          { text: "Cancel", style: "cancel" },
+          {
+            text: "Unfollow",
+            style: "destructive",
+            onPress: () => setFollowing(false) // BackEnd.billboards.removeUser(getUserId(), billboardId),
+          },
+        ],
+        { cancelable: true },
+      );
+    }
+    setFollowing(true) // temp, switch with backend
+    // BackEnd.billboards.addUser(getUserId(), billboardId)
+  };
+
+  function createNewPost() {
+    navigation.navigate(
+      navigation.navigate("NewPost", {
+      post: { billboardId: billboardId },
+      state: "new",
+    }))
+  };
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -29,7 +67,31 @@ export default function BillboardTemplate({ billboardId, closeFunction }) {
           <Text style={styles.closeText}>x</Text>
         </TouchableOpacity>
         <Text style={styles.title}>{billboard.name}</Text>
-
+        <TouchableOpacity
+            style={styles.members}
+            onPress={() => setModalVisible(true)}
+          >
+            <Ionicons name={"person"} size={15} paddingRight={3} />
+            <Text style={{ flex: 1 }}> {billboard.userIds.length} Musicians</Text>
+        </TouchableOpacity>
+        <MembersModal
+          headLine={"Musicians"}
+          ids={billboard.userIds}
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+        />
+        <View style={{flexDirection: 'row'}}>
+          <AppButton
+            text={following? "✓ Following": "+ Follow"}
+            onPress={handleFollow}
+            apllied={following}
+          />
+          <AppButton
+            text={"+ New Post"}
+            onPress={createNewPost}
+            apllied={false}
+          />
+        </View>
         {relevantPosts.length > 0 ? (
           <FlatList
             data={relevantPosts}
@@ -87,10 +149,30 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: "bold",
-    marginBottom: 15,
+    marginBottom: 2,
     paddingLeft: 20,
   },
   noPosts: {
     fontStyle: "italic",
+  },
+   members: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 0,
+    paddingHorizontal: 20,
+  },
+  button: {
+    width: 100,
+    height: 35,
+    borderColor: colors.black,
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderRadius: 15,
+    marginVertical: 15,
+    marginHorizontal: 10
+  },
+  buttonText: {
+    fontWeight: 'bold',
+    alignSelf: 'center'
   },
 });
