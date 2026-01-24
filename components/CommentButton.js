@@ -13,50 +13,38 @@ import { getObjectById } from "../utils/DataHandle";
 import { posts } from "../temp_data/posts";
 import colors from "../constants/colors";
 import MembersModal from "./MembersModal";
+import CommentsModal from "./CommentsModal";
 
-const LikeButton = ({ postId }) => {
-  const [likeIds, setLikeIds] = useState([]);
+const  CommentButton = ({ postId }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
-  const currentUserId = getUserId();
+  const [commentIds, setCommentIds] = useState([])
+  const post = getObjectById(postId, posts);
 
-  // Initialize likes from post data
   useFocusEffect(
-    useCallback(() => {
-      const post = getObjectById(postId, posts);
-      const initialLikes = post?.likeIds ?? [];
-      setLikeIds(initialLikes);
-      setIsLiked(initialLikes.includes(currentUserId));
-    }, [postId])
-  );
-
-  function handleLikePress() {
-    // add backend call later
-  }
+      useCallback(() => {
+        const post = getObjectById(postId, posts);
+        const initialComments = post?.commentIds ?? [];
+        setCommentIds(initialComments);
+      }, [postId])
+    );
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        style={[styles.button, isLiked && styles.buttonLiked]}
-        onPress={handleLikePress}
+        style={styles.button}
+        onPress={() => setModalVisible(true)}
       >
         <Ionicons
-          name={isLiked ? "heart" : "heart-outline"}
+          name={ "chatbubble" }
           size={24}
-          color={isLiked ? colors.black : colors.darkGray}
+          color={ colors.black }
         />
       </TouchableOpacity>
+      <Text style={styles.likeCountText}>{commentIds.length}</Text>
 
-      <TouchableOpacity
-        style={styles.likeCount}
-        onPress={() => likeIds.length > 0 && setModalVisible(true)}
-      >
-        <Text style={styles.likeCountText}>{likeIds.length}</Text>
-      </TouchableOpacity>
-
-      <MembersModal
-        headLine={`Liked by (${likeIds.length})`}
-        ids={likeIds}
+      <CommentsModal
+        headLine={`Comments (${commentIds.length})`}
+        postId={postId}
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
       />
@@ -88,4 +76,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LikeButton;
+export default CommentButton;

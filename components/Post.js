@@ -6,13 +6,14 @@ import { getObjectById } from "../utils/DataHandle";
 import { users } from "../temp_data/Users";
 import LikeButton from "./LikeButton";
 import { timeAgo } from "../utils/DateTimeHandle";
-//import CommentButton from "./CommentButton";
+import CommentsModal from "./CommentsModal";
+import CommentButton from "./CommentButton";
 
 const Post = ({ data }) => {
   const user = getObjectById(data.userId, users);
   const postDate = timeAgo(data.createdAt);
   const navigation = useNavigation();
-
+  
   return (
     <View style={styles.post}>
       <TouchableOpacity style={styles.userLine} onPress={() => navigation.navigate("Profile", { person: user })}>
@@ -23,14 +24,13 @@ const Post = ({ data }) => {
         <Text style={styles.userName}>{user.firstName} {user.lastName}</Text>
       </TouchableOpacity>
       <Image source={{ uri: data.imageUrl }} style={{ width: '100%', height: 380, marginBottom: 10 }} />
+      <View style={{ flexDirection: "row", justifyContent: "flex-start", marginBottom: 5 }}>
+        <LikeButton postId={data.id} />
+        <CommentButton postId={data.id} />
+      </View>
       <Text style={styles.title}>{data.title}</Text>
       <Text style={styles.content}>{data.details}</Text>
-      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <LikeButton postId={data.id} />
-        {/*<CommentButton postId={data.id} />*/}
-        <Text style={styles.postDate}>{postDate}</Text>
-      </View>
-      
+      <Text style={styles.postDate}>{postDate}</Text>
     </View>
   );
 };
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   postDate: {
-    paddingRight: 10,
+    paddingHorizontal: 10,
     paddingVertical: 4,
     fontSize: 12,
     color: colors.darkGray,

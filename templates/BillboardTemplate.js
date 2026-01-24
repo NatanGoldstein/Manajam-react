@@ -23,6 +23,7 @@ export default function BillboardTemplate({ billboardId, closeFunction }) {
 
   return (
     <SafeAreaView style={styles.screen}>
+      <TouchableOpacity style={styles.background} onPress={closeFunction}/>
       <View style={styles.container}>
         <TouchableOpacity style={styles.closeButton} onPress={closeFunction}>
           <Text style={styles.closeText}>x</Text>
@@ -51,21 +52,28 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     position: "absolute",
     top: 0,
-    bottom: 30,
+    bottom: 0,
     left: 0,
     right: 0,
     zIndex: 999,
+  },
+  background: {
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
   },
   container: {
     flex: 0.8,
     width: "95%",
     alignSelf: "center",
-  backgroundColor: colors.white,
+    backgroundColor: colors.white,
     borderRadius: 20,
-  paddingTop: 20,
-  shadowColor: colors.black,
+    paddingTop: 20,
+    shadowColor: colors.black,
     shadowOpacity: 0.3,
     shadowOffset: { width: 0, height: 2 },
+    zIndex: 999,
   },
   closeButton: {
     position: "absolute",

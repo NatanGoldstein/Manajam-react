@@ -8,7 +8,7 @@ export const posts = [
     imageUrl: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3VpdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
     createdAt: "2026-01-15T10:30:00.000Z",
     likeIds: [1, 2, 3],
-    commentIds: ['1', '2'],
+    commentIds: [1, 2],
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ export const posts = [
     imageUrl: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3VpdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
     createdAt: "2026-01-15T10:30:00.000Z",
     likeIds: [1, 2, 3],
-    commentIds: ['1', '2'],
+    commentIds: [1, 2],
   },
   {
     id: 3,
@@ -30,7 +30,7 @@ export const posts = [
     imageUrl: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3VpdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
     createdAt: "2026-01-15T10:30:00.000Z",
     likeIds: [1, 2, 3],
-    commentIds: ['1', '2'],
+    commentIds: [1, 2],
   },
   {
     id: 4,
@@ -41,7 +41,7 @@ export const posts = [
     imageUrl: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3VpdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
     createdAt: "2026-01-15T10:30:00.000Z",
     likeIds: [1, 2, 3],
-    commentIds: ['1', '2'],
+    commentIds: [1, 2],
   },
   {
     id: 5,
@@ -52,7 +52,7 @@ export const posts = [
     imageUrl: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3VpdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
     createdAt: "2026-01-15T10:30:00.000Z",
     likeIds: [1, 2, 3],
-    commentIds: ['1', '2'],
+    commentIds: [1, 2],
   },
   {
     id: 6,
@@ -63,7 +63,7 @@ export const posts = [
     imageUrl: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3VpdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
     createdAt: "2026-01-15T10:30:00.000Z",
     likeIds: [1, 2, 3],
-    commentIds: ['1', '2'],
+    commentIds: [1, 2],
   },
   {
     id: 7,
@@ -74,7 +74,7 @@ export const posts = [
     imageUrl: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3VpdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
     createdAt: "2026-01-15T10:30:00.000Z",
     likeIds: [1, 2, 3],
-    commentIds: ['1', '2'],
+    commentIds: [1, 2],
   },
   {
     id: 8,
@@ -85,7 +85,7 @@ export const posts = [
     imageUrl: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3VpdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
     createdAt: "2026-01-15T10:30:00.000Z",
     likeIds: [1, 2, 3],
-    commentIds: ['1', '2'],
+    commentIds: [1, 2],
   },
   {
     id: 9,
@@ -96,7 +96,7 @@ export const posts = [
     imageUrl: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3VpdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
     createdAt: "2026-01-15T10:30:00.000Z",
     likeIds: [1, 2, 3],
-    commentIds: ['1', '2'],
+    commentIds: [1, 2],
   },
   {
     id: 10,
@@ -107,7 +107,7 @@ export const posts = [
     imageUrl: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3VpdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
     createdAt: "2026-01-15T10:30:00.000Z",
     likeIds: [1, 2, 3],
-    commentIds: ['1', '2'],
+    commentIds: [1, 2],
   },
   {
     id: 11,
@@ -118,7 +118,7 @@ export const posts = [
     imageUrl: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3VpdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
     createdAt: "2026-01-15T10:30:00.000Z",
     likeIds: [1, 2, 3],
-    commentIds: ['1', '2'],
+    commentIds: [1, 2],
   },
   {
     id: 12,
@@ -129,6 +129,6 @@ export const posts = [
     imageUrl: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3VpdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
     createdAt: "2026-01-15T10:30:00.000Z",
     likeIds: [1, 2, 3],
-    commentIds: ['1', '2'],
+    commentIds: [1, 2],
   },
 ];
