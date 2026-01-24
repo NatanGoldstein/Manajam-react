@@ -16,6 +16,8 @@ import { bands } from "../temp_data/Bands";
 import { getObjectById } from "../utils/DataHandle";
 import { getUserId } from "../local_data/UserData";
 import { users } from "../temp_data/Users";
+import AppScreenTopLine from "../components/AppScreenTopLine";
+import AppButton from "../components/AppButton";
 
 export default function ProfileScreen() {
   const route = useRoute();
@@ -29,48 +31,43 @@ export default function ProfileScreen() {
   }
   const navigation = useNavigation();
 
+  const userName = `${person.firstName} ${person.lastName}`
+
+  function handlePress(){
+    // later
+  };
+
   return (
     <SafeAreaView style={styles.super}>
-      <View style={styles.header}>
+      {isCurrentUser ? (
+        <View style={styles.header}>
+          <Text style={styles.name}>{userName}</Text>
+        </View>
+      ) : (
+        <AppScreenTopLine text={userName} />
+      )}
+      <View style={styles.topSection}>
         <Image
           source={{ uri: person.imageSource }}
           style={styles.profileImage}
         />
-        <Text style={styles.name}>
-          {person.firstName} {person.lastName}
-        </Text>
-        <Text style={styles.specs}>
-          Instruments - {person.primaryInstrument}
-          {person.secondaryInstrument ? `, ${person.secondaryInstrument}` : ""}
-        </Text>
-        <Text style={styles.specs}>
-          Favorite genre - {person.genre} {"\n"}Level - {person.level}
-        </Text>
-        {/* Action Button */}
-        {isCurrentUser ? (
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Edit Profile</Text>
-          </TouchableOpacity>
-        ) : (
-          <View>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Ionicons
-                name="chevron-back"
-                size={40}
-                style={styles.backButton}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>Message</Text>
-            </TouchableOpacity>
-          </View>
-        )}
+        <View style={styles.bio}>
+          <Text style={styles.specs}>
+            Instruments - {person.primaryInstrument}
+            {person.secondaryInstrument ? `, ${person.secondaryInstrument}` : ""}
+          </Text>
+          <Text style={styles.specs}>
+            Favorite genre - {person.genre} {"\n"}Level - {person.level}
+          </Text>
+        </View>
       </View>
+      <AppButton
+        text={isCurrentUser? "Edit Profile" : "Message"}
+        onPress={handlePress}
+        apllied={isCurrentUser}
+      />
       <ScrollView style={styles.container}>
-        {/* Top Section - Profile Image & Specs */}
-
-        {/* Bands Section */}
-        <Text style={{ marginTop: 20, fontSize: 16, fontWeight: "600" }}>
+        <Text style={{ marginBottom: 20, fontSize: 16, fontWeight: "600" }}>
           Bands
         </Text>
         {person.bands && person.bands.length > 0 ? (
@@ -128,14 +125,23 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   header: {
-    alignItems: "center",
+    alignItems: "flex-start",
+    marginLeft: 10,
     marginBottom: 20,
+  },
+  topSection: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
   },
   profileImage: {
     width: 120,
     height: 120,
     borderRadius: 60,
-    marginBottom: 10,
+    margin: 15,
+  },
+  bio: {
+    alignItems: 'flex-start'
   },
   name: {
     fontSize: 22,
@@ -143,8 +149,7 @@ const styles = StyleSheet.create({
   },
   specs: {
     fontSize: 14,
-  color: colors.darkGray,
-    textAlign: "center",
+    color: colors.darkGray,
   },
   button: {
     marginTop: 20,

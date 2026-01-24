@@ -12,6 +12,7 @@ import colors from "../constants/colors";
 import BandScheduleTab from "../components/BandScheduleTab";
 import BandSongsTab from "../components/BandSongsTab";
 import BandTasksTab from "../components/BandTasksTab";
+import AppScreenTopLine from "../components/AppScreenTopLine";
 
 function NavItem({ name, isActive, onPress }) {
   const size = 30;
@@ -40,12 +41,9 @@ export default function BandProfileTemplate() {
 
   return (
     <SafeAreaView style={styles.super}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="chevron-back" size={40} style={styles.backButton} />
-        </TouchableOpacity>
-        <Text style={styles.name}>{band.name}</Text>
-      </View>
+      <AppScreenTopLine
+        text={band.name}
+      />
       <View style={styles.topLine}>
         <Image source={{ uri: band.imageSource }} style={styles.profileImage} />
         <View style={styles.bio}>
