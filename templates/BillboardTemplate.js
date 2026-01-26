@@ -18,6 +18,7 @@ import MembersModal from "../components/MembersModal";
 import { getUserId } from "../local_data/UserData";
 import { useNavigation } from "@react-navigation/native";
 import AppButton from "../components/AppButton";
+import AppCloseButton from "../components/AppCloseButton";
 
 export default function BillboardTemplate({ billboardId, closeFunction }) {
   const navigation = useNavigation();
@@ -52,20 +53,17 @@ export default function BillboardTemplate({ billboardId, closeFunction }) {
   };
 
   function createNewPost() {
-    navigation.navigate(
       navigation.navigate("NewPost", {
-      post: { billboardId: billboardId },
+      billboardId: billboardId,
       state: "new",
-    }))
+    })
   };
 
   return (
     <SafeAreaView style={styles.screen}>
       <TouchableOpacity style={styles.background} onPress={closeFunction}/>
       <View style={styles.container}>
-        <TouchableOpacity style={styles.closeButton} onPress={closeFunction}>
-          <Text style={styles.closeText}>x</Text>
-        </TouchableOpacity>
+        <AppCloseButton onPress={closeFunction}/>
         <Text style={styles.title}>{billboard.name}</Text>
         <TouchableOpacity
             style={styles.members}

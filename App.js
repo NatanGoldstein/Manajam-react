@@ -15,6 +15,8 @@ import NewSongTemplate from "./templates/NewSongTemplate";
 import SongTemplate from "./templates/SongTemplate";
 import LyricsFullTemplate from "./templates/LyricsFullTemplate";
 import MyFilesScreen from "./screens/MyFilesScreen";
+import NewPostTemplate from "./templates/NewPostTemplate";
+import ImageEditor from "./components/ImageEditor";
 
 const Stack = createNativeStackNavigator();
 
@@ -74,6 +76,13 @@ export default function App() {
           }}
         />
         <Stack.Screen name="MyFiles" component={MyFilesScreen} />
+        <Stack.Screen name="NewPost" component={NewPostTemplate} 
+          options={{
+              presentation: "modal",
+              animation: "slide_from_bottom",
+          }}
+        />
+        <Stack.Screen name="ImageEditor" component={ImageEditor} />
       </Stack.Navigator>
     </NavigationContainer>
   );

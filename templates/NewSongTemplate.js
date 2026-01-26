@@ -12,6 +12,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { getObjectById } from "../utils/DataHandle";
 import { bands } from "../temp_data/Bands";
 import colors from "../constants/colors";
+import AppCloseButton from "../components/AppCloseButton";
+import AppButton from "../components/AppButton";
 
 export default function NewSongTemplate() {
   const route = useRoute();
@@ -71,14 +73,7 @@ export default function NewSongTemplate() {
   return (
     <View>
       <View style={styles.topBar}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => {
-            navigation.goBack();
-          }}
-        >
-          <Text style={styles.backText}>X</Text>
-        </TouchableOpacity>
+        <AppCloseButton />
         <Text style={styles.headerTitle}>
           {state == "new" ? "New Song" : "Edit Song"}
         </Text>
@@ -127,11 +122,7 @@ export default function NewSongTemplate() {
               </View>
             )}
         </View>
-        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.buttonText}>
-            {state == "new" ? "Create" : "Update"}
-          </Text>
-        </TouchableOpacity>
+        <AppButton text={state == "new" ? "Create" : "Update"} apllied={false} onPress={handleSubmit} />
       </ScrollView>
       {/* Floating window1 overlay, only show when showFloatingWindow1 is true */}
       {showFloatingWindow1 && (

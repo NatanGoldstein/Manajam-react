@@ -20,6 +20,8 @@ import { bands } from "../temp_data/Bands";
 import Collapsible from "react-native-collapsible";
 import { selectionAsync } from "expo-haptics";
 import colors from "../constants/colors";
+import AppCloseButton from "../components/AppCloseButton";
+import AppButton from "../components/AppButton";
 
 export default function NewEventTemplate() {
   const route = useRoute();
@@ -111,14 +113,7 @@ export default function NewEventTemplate() {
   return (
     <View>
       <View style={styles.topBar}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => {
-            navigation.goBack();
-          }}
-        >
-          <Text style={styles.backText}>X</Text>
-        </TouchableOpacity>
+        <AppCloseButton />
         <Text style={styles.headerTitle}>
           {state == "new" ? "New Event" : "Edit event"}
         </Text>
@@ -210,11 +205,7 @@ export default function NewEventTemplate() {
             </ScrollView>
           </Collapsible>
         </View>
-        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.buttonText}>
-            {state == "new" ? "Create" : "Update"}
-          </Text>
-        </TouchableOpacity>
+        <AppButton text={state == "new" ? "Create" : "Update"} apllied={false} onPress={handleSubmit} />
       </ScrollView>
     </View>
   );

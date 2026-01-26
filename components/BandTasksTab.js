@@ -148,11 +148,7 @@ export default function BandTasksTab({ band }) {
               </ScrollView>
             </Collapsible>
           </View>
-          
-          
-          <TouchableOpacity style={styles.submitButton} onPress={handleNewTask}>
-            <Text style={styles.submitButtonText}>Submit Task</Text>
-          </TouchableOpacity>
+          <AppButton text={"Submit Task"} apllied={false} onPress={handleNewTask} />
         </View>
       </Collapsible>
       <ScrollView style={styles.sectionContent}>
