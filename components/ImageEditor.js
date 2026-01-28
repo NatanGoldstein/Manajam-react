@@ -8,6 +8,8 @@ import { Ionicons, AntDesign } from "@expo/vector-icons";
 import AppButton from "./AppButton";
 import { Feather } from "@expo/vector-icons";
 import { pickImageFromLibrary } from "../utils/ImagePicker";
+import MoveableTextBox from "./MoveableTextBox";
+
 
 export default function ImageEditor() {
     const route = useRoute();
@@ -15,6 +17,8 @@ export default function ImageEditor() {
   const [currentUri, setCurrentUri] = useState(image.uri);
   const [rotation, setRotation] = useState(0);
   const navigation = useNavigation();
+  const [showText, setShowText] = useState(false);
+
 
   const rotateImage = async () => {
     const result = await ImageManipulator.manipulateAsync(
@@ -45,6 +49,7 @@ export default function ImageEditor() {
       <AppCloseButton color={colors.white}/>
       <View style={styles.imageContainer}>
         <Image source={{ uri: currentUri }} style={styles.image} />
+        {showText && <MoveableTextBox color={colors.white} />}
         <TouchableOpacity 
             style={{position: 'absolute', top: 15, left: 15}}
             onPress={() => handleImageChange()}
@@ -60,7 +65,7 @@ export default function ImageEditor() {
             <Text style={styles.button}>Rotate</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => setShowText(true)}>
                 <Ionicons name={"text"} size={30} style={styles.icon} />
             <Text style={styles.button}>Add Text</Text>
             </TouchableOpacity>
@@ -75,6 +80,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#000",
+    zIndex: 999,
   },
   imageContainer: {
     flex: 1,

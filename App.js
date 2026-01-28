@@ -67,6 +67,13 @@ export default function App() {
           }}
         />
         <Stack.Screen name="Song" component={SongTemplate} />
+        <Stack.Screen name="ImageEditor" component={ImageEditor}
+        options={{
+              presentation: "modal",
+              animation: "slide_from_bottom",
+              gestureEnabled: false,
+          }}
+        />
         <Stack.Screen
           name="LyricsFull"
           component={LyricsFullTemplate}
@@ -80,9 +87,10 @@ export default function App() {
           options={{
               presentation: "modal",
               animation: "slide_from_bottom",
+              gestureEnabled: false,
           }}
         />
-        <Stack.Screen name="ImageEditor" component={ImageEditor} />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
