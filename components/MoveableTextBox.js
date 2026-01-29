@@ -1,86 +1,145 @@
-import React, { useState } from "react";
-import { View, TextInput, StyleSheet, PanResponder } from "react-native";
-import colors from "../constants/colors";
+import React, { useRef, useState } from "react";
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  PanResponder,
+} from "react-native";
 
-export default function MoveableTextBox({ color = "#fff", maxWidth = 700 }) {
+export default function MoveableTextBox() {
+  const [text, setText] = useState("Tap to edit");
+  const [editing, setEditing] = useState(false);
+
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [scale, setScale] = useState(1);
-  const [width, setWidth] = useState(100);
-  const [text, setText] = useState("");
+  const [rotation, setRotation] = useState(0);
+  const [width, setWidth] = useState(120);
 
-  // PanResponder for dragging
+  const startPos = useRef({ x: 0, y: 0 });
+  const startTouches = useRef(null);
+  const tapTimeout = useRef(null);
+  const activeTouches = useRef(0);
+
+  /* ---------------- DRAG (1 finger only) ---------------- */
+
   const panResponder = PanResponder.create({
-    onStartShouldSetPanResponder: () => true,
-    onMoveShouldSetPanResponder: () => true,
-    onPanResponderMove: (_, gestureState) => {
+    onStartShouldSetPanResponder: (e) => {
+      activeTouches.current = e.nativeEvent.touches.length;
+      return activeTouches.current === 1;
+    },
+
+    onMoveShouldSetPanResponder: (e) =>
+      e.nativeEvent.touches.length === 1,
+
+    onPanResponderGrant: () => {
+      startPos.current = position;
+
+      tapTimeout.current = setTimeout(() => {
+        tapTimeout.current = null;
+      }, 180);
+    },
+
+    onPanResponderMove: (_, gesture) => {
+      if (tapTimeout.current) {
+        clearTimeout(tapTimeout.current);
+        tapTimeout.current = null;
+      }
+
       setPosition({
-        x: gestureState.dx,
-        y: gestureState.dy,
+        x: startPos.current.x + gesture.dx,
+        y: startPos.current.y + gesture.dy,
       });
+    },
+
+    onPanResponderRelease: () => {
+      if (tapTimeout.current) {
+        clearTimeout(tapTimeout.current);
+        tapTimeout.current = null;
+        setEditing(true);
+      }
     },
   });
 
-  // Simple pinch/zoom using two-finger distance
-  const handleTouchMove = (e) => {
-    if (e.nativeEvent.touches.length === 2) {
-      const t1 = e.nativeEvent.touches[0];
-      const t2 = e.nativeEvent.touches[1];
-      const distance = Math.hypot(t2.pageX - t1.pageX, t2.pageY - t1.pageY);
-      setScale(Math.max(0.5, distance / 150)); // prevents too small
+  /* ---------------- PINCH + ROTATE (2 fingers) ---------------- */
+
+  const onTouchMove = (e) => {
+    if (e.nativeEvent.touches.length !== 2) {
+      startTouches.current = null;
+      return;
     }
+
+    const [a, b] = e.nativeEvent.touches;
+    const dx = b.pageX - a.pageX;
+    const dy = b.pageY - a.pageY;
+
+    const distance = Math.hypot(dx, dy);
+    const angle = Math.atan2(dy, dx);
+
+    if (!startTouches.current) {
+      startTouches.current = { distance, angle };
+      return;
+    }
+
+    setScale((prev) =>
+      Math.max(0.4, prev * (distance / startTouches.current.distance))
+    );
+
+    setRotation((prev) => prev + angle - startTouches.current.angle);
+
+    startTouches.current = { distance, angle };
   };
 
-  // Dynamically adjust width based on text, clamped to maxWidth
-  const handleContentSizeChange = (e) => {
-    const contentWidth = e.nativeEvent.contentSize.width + 20; // padding
-    setWidth(Math.min(contentWidth, maxWidth));
+  /* ---------------- WIDTH AUTO-FIT ---------------- */
+
+  const onContentSizeChange = (e) => {
+    setWidth(Math.min(e.nativeEvent.contentSize.width + 20, 320));
   };
 
   return (
     <View
       {...panResponder.panHandlers}
-      onTouchMove={handleTouchMove}
+      onTouchMove={onTouchMove}
       style={[
-        styles.container,
+        styles.box,
         {
+          width,
           transform: [
             { translateX: position.x },
             { translateY: position.y },
             { scale },
+            { rotate: `${rotation}rad` },
           ],
         },
       ]}
     >
       <TextInput
-        placeholder="Type text"
-        placeholderTextColor="#aaa"
-        style={[styles.text, { color, width }]}
-        multiline={false}
         value={text}
+        editable={editing}
+        autoFocus={editing}
+        onBlur={() => setEditing(false)}
         onChangeText={setText}
-        onContentSizeChange={handleContentSizeChange}
-        autoFocus
+        onContentSizeChange={onContentSizeChange}
+        style={styles.text}
       />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  box: {
     position: "absolute",
-    left: "50%", // centered horizontally
-    top: "50%",  // centered vertically
-    transform: [{ translateX: -50 }], // initial offset to roughly center
-    borderWidth: 1,
-    borderColor: colors.lightGray,
+    left: "50%",
+    top: "50%",
+    backgroundColor: "rgba(0,0,0,0.35)",
     borderRadius: 6,
-    padding: 2,
-    backgroundColor: "rgba(0,0,0,0.2)", // optional subtle background
+    borderWidth: 1,
+    borderColor: "#aaa",
   },
   text: {
     fontSize: 28,
-    fontWeight: "600",
-    textAlign: "center",
+    color: "#fff",
     padding: 8,
+    textAlign: "center",
+    fontWeight: "600",
   },
 });
